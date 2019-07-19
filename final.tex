@@ -1,0 +1,208 @@
+\documentclass[11pt]{report}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{microtype}
+\usepackage{mathpazo}
+\usepackage{euler}
+\usepackage{thmtools,xcolor}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{arrows}
+\usetikzlibrary{matrix}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+
+\renewcommand\qedsymbol{$\paint{\blacklozenge}$}
+\definecolor{color}{RGB}{75, 150, 80}
+\declaretheoremstyle[
+  headfont=\color{color}\normalfont\bfseries
+]{colored}
+\theoremstyle{colored}
+\newtheorem{definition}{Definición}[section]
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{proposition}{Proposición}[section]
+\newtheorem{corollary}{Corolario}[section]
+\newtheorem{lemma}{Lema}[section]
+\newtheorem{remark}{Observación}[section]
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\M}[2]{\mathsf{M}_{#1}#2}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\sop}{\operatorname{sop}}
+\newcommand{\ev}{\operatorname{ev}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\nat}[1]{[\![#1]\!]}
+\newcommand{\natzero}[1]{\nat{#1}_0}
+\newcommand{\ip}[1]{( #1 )}
+\newcommand{\ol}{\overline}
+\newcommand{\paint}[1]{\color{color}{#1}}
+\newcommand{\tpaint}[1]{\paint{\textbf{#1}}}
+\newcommand{\paintline}{\begin{center}
+$\paint{
+\rule{400pt}{0.5pt}
+}$
+\vspace{10pt}
+\end{center}}
+
+%-----------------------
+
+\title{
+\LARGE{Análisis Funcional}
+\\
+\vspace{1pt}
+\small{Primer Cuatrimestre -- 2019}
+\\
+\vspace{0.5pt}
+\large{Examen Final}
+\\
+\vspace{80pt}
+{\includegraphics[height=5cm]{uba2.jpg}}
+\vspace{80pt}
+}
+\author{Guido Arnone}
+\date{}
+\lhead{Guido Arnone}
+\rhead{Examen Final}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\chapter{Preliminares}
+Repaso primero algunos resultados que vimos en la materia, y voy a necesitar para la demostración del teorema espectral.
+\section{Operadores Compactos}
+\section{Teoría Espectral}
+\chapter{El teorema espectral, cálculo funcional y aplicaciones}
+\section{El teorema espectral}
+\begin{theorem}[espectral para operadores compactos y autoadjuntos] Sea $H$ un espacio de Hilbert separable. Si $A \in \mathscr{L}(H)$ es un operador compacto y autoadjunto, entonces existe una base ortonormal de autovectores $\{e_n\}_{n \geq 1}$ de $A$.
+\end{theorem}
+\section{Cálculo Funcional}
+
+\begin{definition} Sea $H$ un espacio de Hilbert separable y $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Tenemos entonces una base ortonormal de autovectores $\{e_n\}_{n \geq 1}$ de $A$ con $\sigma(A) = \{\lambda_n\}_{n \geq 1}$. Si $f : \sigma(A) \to \R$ una función acotada, definimos
+\begin{align*}
+\ev_A(f)(x) := \sum_{n \geq 1}f(\lambda_n)\ip{e_n,x}e_n.
+\end{align*}
+Notaremos $f(A) := \ev_A(f)$. Observemos que esta función está bien definida, es continua, y no depende de la base elegida. $\tpaint{\textbf{[HACER]}}$
+\end{definition}
+
+\subsection{Algunas propiedades básicas}
+
+\begin{theorem} Sea $H$ un espacio de Hilbert separable y $A \in \mathscr{L}(H)$ un operador compacto y autoadjunto. Entonces, la aplicación
+\begin{align*}
+\ev_A : B(\sigma(A),\R&) \to \mathscr{L}(H)\\
+&f \mapsto \ev_A(f)
+\end{align*}
+es un morfismo de álgebras de Banach continuo que satisface $\|ev_A\| \leq 1$. Más aún, se tiene que $\ev_A(\mathsf{1}) = I$ y $\ev_A(\id) = A$. 
+\end{theorem}
+\begin{proof}
+content...
+\end{proof}
+
+\begin{proposition} Sea $H$ un espacio de Hilbert separable y $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Si $f : \sigma(A) \to \R$ es una función acotada en, entonces
+\begin{itemize}
+\item[(i)] $\sigma(f(A)) = f(\sigma(A))$.
+\item[(ii)] $f(A)$ es autoadjunta.
+\item[(iii)] $\|f(A)\| = \|f|_{\sigma(A)}\|_{\infty}$.
+\end{itemize}
+\end{proposition}
+\begin{proof} Fijemos una base ortonormal $\{e_n\}_{n \geq 1}$ de autovectores de $A$ con $Ae_n = \lambda_ne_n$ para cada $n \in \N$. 
+\begin{itemize}[listparindent = \parindent]
+\item[(i)] Si $\lambda_j \in \sigma(A)$, es
+\begin{align*}
+f(A)e_j = \sum_{n \geq 1}f(\lambda_n)(e_n,e_j)e_n = f(\lambda_j)e_j,
+\end{align*}
+así que $f(\sigma(A)) \subset \sigma(f(A))$. 
+
+Recíprocamente, tomemos $\lambda \not \in f(\sigma(A))$. Como esto dice que función $g(t) = (f(t)-\lambda)^{-1}$ está bien definida en $\sigma(A)$ y es allí acotada, está bien definida su evaluación $g(A)$ en $A$. Como es $g(f-\lambda) = (f-\lambda)g = \mathsf{1}$, aplicando $\ev_A$ obtenemos que
+\begin{align*}
+g(A)(f(A)- \lambda I) = (f(A) - \lambda I)g(A) = I.
+\end{align*}
+y en consecuencia $\lambda$ no pertenece al espectro de $f(A)$,
+\item[(ii)] Por un cálculo directo, tomando $x,y \in H$ se tiene que 
+\begin{align*}
+\ip{f(A)x, y} = \sum_{n \geq 1} f(\lambda_n) \ip{e_n, x}\ip{e_n,y}  = \ip{f(A)y,x} = \ip{x, f(A)y}.
+\end{align*}
+\item[(iii)] Como es $\|ev_A\| \leq 1$, ya sabemos que $\|f(A)\| \leq \|f_{\sigma(A)}\|_\infty$. En vista de $\tpaint{(i)}$ tenemos la otra desigualdad, pues acotando inferiormente por los autovectores de norma $1$ se tiene que 
+\begin{align*}
+\|f(A)\| = \sup_{\|x\| = 1}\|f(A)(x)\| \geq \sup_{\lambda \in \sigma(f(A))}|\lambda| = \sup_{\lambda \in f(\sigma(A))}|\lambda| = \|f|_{\sigma(A)}\|_\infty.
+\end{align*}
+\end{itemize}
+\end{proof}
+
+\begin{remark} Lo anteriores resultados también valen cuando $f$ está definida en un dominio que contiene al espectro (mientras esté acotada allí) precomoponiendo $\ev_A$ con la restricción de $f$ al $\sigma(A)$. Más aún, el operador $f(A)$ sólo depende de los valores que $f$ toma en su espectro. En particular, esto nos dice que podemos definir $f(A)$ para $f : \R \to \R$ continua o medible Borel. 
+
+Más aún, la aplicación $ev_A : \mathcal{C}(\R) \to \mathscr{L}(H)$ es el único morfismo de álgebras de Banach continuo que tiene a $I$ por imagen de $\mathsf{1}$ y $A$ por imagen de $\id$.
+\end{remark}
+
+\begin{proposition} Sea $H$ un espacio de Hilbert separable y $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Si $f : \R \to \R$ es una función continua, entonces existe un operador compacto $S \in \mathscr{K}(H)$ tal que
+\begin{align*}
+f(A) = S + f(0)I.
+\end{align*}
+\end{proposition}
+\begin{proof} Por el teorema de Stone-Weierstraß, sabemos que existe una sucesión de polinomios $(p_n)_{n \geq 1}$ tal que $p_n \to f$ fuertemente y en particular, es $p_n(0) \to f(0)$. Ahora, para cada $n \in \N$ definimos
+\begin{align*}
+q_n = p_n - p_n(0),
+\end{align*} 
+y en vista de la observación anterior, se tiene que $q_n \to f - f(0)$. Aplicando $ev_A$ y usando que ésta es continua, es
+\begin{align}
+q_n(A) \to (f-f(0))(A) = f(A) - f(0)I.
+\end{align}
+
+Fijemos ahora $n \in \N$. Como $q_n(0) = p_n(0) - p_n(0) = 0$, existe $r \in \R[X]$ tal que $q_n = Xr$. Por lo tanto, obtenemos $q_n(A) = (Xr)(A) = ev_A(X) \circ ev_A(r) = A \circ r(A)$. Al ser $A$ un operador compacto, el operador $q_n(A)$ es compacto para cada $n \in \N$. En vista de $\tpaint{(2.1)}$, obtenemos finalmente que el operador $f(A) - f(0)I$ es compacto. Resta notar entonces que
+\begin{align*}
+f(A) = (f(A)-f(0)I) + f(0)I.
+\end{align*}  
+\end{proof}
+
+\begin{corollary} Sea $H$ un espacio de Hilbert separable y $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Si $f : \R \to \R$ es una función continua que se anula en $0$, el operador $f(A)$ resulta compacto. $\square$
+\end{corollary}
+
+\subsection{Aplicaciones}
+
+$\tpaint{\textbf{DECIR ALGO SOBRE RAICES, LA EXPONENCIAL, INVERSAS DE $A-zI$ ETC}}$
+
+\begin{proposition}
+Sea $H$ un espacio de Hilbert separable y $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Si $(g_n)_{n \geq 1} \subset \mathcal{B}(\R,\R)$ es una suceción de funciones medibles que convergen puntualmente a cierta función $g : \R \to \R$, y $(\|g_n\|_\infty)_{n \geq 1}$ es acotada, entonces la sucesión de operadores $\{g_n(A)\}_{n \geq 1} \subset \mathscr{L}(H)$ converge fuertemente a $g(A)$.
+\end{proposition}
+\begin{proof}
+
+\end{proof}
+
+\begin{theorem}[un caso particular del teorema ergódico de Von Neumann] Sea $H$ un espacio de Hilbert separable. Si $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto tal que $\sigma(A) \subset [-1,1]$, entonces los promedios de $A$ convergen fuertemente al proyector $\pi_A$ del subsepacio de puntos fijos de $A$. Es decir, si notamos $E_1 = \{x \in H : Ax = x\}$ y $\pi_A := P_{E_1}$, entonces
+\begin{align*}
+\frac{1}{n}\sum_{i=1}^{n}A^n \ \xrightarrow{n \to \infty} \ \pi_A.
+\end{align*}
+\end{theorem}
+\begin{proof} Para cada $n \in \N$, definimos $g_n(x) := \frac{1}{n}\sum_{i=1}^nx^i$ para cada $x \in [-1,1]$. Tenemos así que $\frac{1}{n}\sum_{i=1}^{n}A^n = g_n(A)$. Por otro lado, la proyección $\pi_A$ coincide con la evaluación en $A$ de 
+\begin{align*}
+g(x) = \begin{cases}
+1 &\text{si $x = 1$}\\
+0 &\text{en caso contrario}
+\end{cases}
+\end{align*}
+
+En vista de la $\tpaint{Proposición 2.2.3}$, basta probar que la sucesión $(g_n)_{n \geq 1}$ está uniformemente acotada y converge puntualmente a $g$. Lo primero se deduce de que si $x \in [-1,1]$ entonces
+\begin{align*}
+|g_n(x)| \leq \frac{1}{n}\sum_{i=1}^n|x|^i \leq \frac{1}{n}\sum_{i=1}^n1 = 1.
+\end{align*}
+
+Ahora veamos la convergencia puntual. En primer lugar, la sucesión $(g_n(1))_{n \geq 1}$ es constantemente $1$ y por lo tanto converge a $g(1) = 1$. Por otro lado, sabemos que $g_n(-1)$ es cero para $n$ par y $-1/n$ para $n$ impar. De aquí se ve que entonces que $g_n(-1) \to 0 = g(-1)$. Finalmente, si $\lambda \in (-1,1)$ entonces
+\begin{align*}
+|g_n(\lambda)| \leq \frac{1}{n}\sum_{i=1}^n|x|^i \leq \frac{1}{n}\sum_{i \geq 1}|x|^i = \frac{1}{n} \cdot \frac{1}{1-|\lambda|} \to 0.
+\end{align*}
+Consecuentemente, debe ser $g_n(\lambda) \to 0 = g(\lambda)$.
+\end{proof}
+
+\end{document}
