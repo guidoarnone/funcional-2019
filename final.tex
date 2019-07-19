@@ -18,6 +18,7 @@
 \usepackage{tcolorbox}
 \tcbuselibrary{theorems}
 
+\addto\captionsspanish{\renewcommand{\chaptername}{Parte}}
 \renewcommand\qedsymbol{$\paint{\blacklozenge}$}
 \definecolor{color}{RGB}{75, 150, 80}
 \declaretheoremstyle[
@@ -82,13 +83,13 @@ $\paint{
 
 \chapter{Preliminares}
 Repaso primero algunos resultados que vimos en la materia, y voy a necesitar para la demostración del teorema espectral.
-\section{Operadores Compactos}
-\section{Teoría Espectral}
-\chapter{El teorema espectral, cálculo funcional y aplicaciones}
-\section{El teorema espectral}
+\subsection{Operadores Compactos}
+\subsection{Teoría Espectral}
+\chapter{El teorema espectral, cálculo funcional continuo y aplicaciones}
+\subsection{El teorema espectral}
 \begin{theorem}[espectral para operadores compactos y autoadjuntos] Sea $H$ un espacio de Hilbert separable. Si $A \in \mathscr{L}(H)$ es un operador compacto y autoadjunto, entonces existe una base ortonormal de autovectores $\{e_n\}_{n \geq 1}$ de $A$.
 \end{theorem}
-\section{Cálculo Funcional}
+\subsection{Cálculo Funcional}
 
 \begin{definition} Sea $H$ un espacio de Hilbert separable y $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Tenemos entonces una base ortonormal de autovectores $\{e_n\}_{n \geq 1}$ de $A$ con $\sigma(A) = \{\lambda_n\}_{n \geq 1}$. Si $f : \sigma(A) \to \R$ una función acotada, definimos
 \begin{align*}
@@ -115,6 +116,7 @@ content...
 \item[(i)] $\sigma(f(A)) = f(\sigma(A))$.
 \item[(ii)] $f(A)$ es autoadjunta.
 \item[(iii)] $\|f(A)\| = \|f|_{\sigma(A)}\|_{\infty}$.
+\item[(iv)] Si $f \geq 0$ entonces $f(A) \geq 0$.
 \end{itemize}
 \end{proposition}
 \begin{proof} Fijemos una base ortonormal $\{e_n\}_{n \geq 1}$ de autovectores de $A$ con $Ae_n = \lambda_ne_n$ para cada $n \in \N$. 
@@ -138,6 +140,11 @@ y en consecuencia $\lambda$ no pertenece al espectro de $f(A)$,
 \begin{align*}
 \|f(A)\| = \sup_{\|x\| = 1}\|f(A)(x)\| \geq \sup_{\lambda \in \sigma(f(A))}|\lambda| = \sup_{\lambda \in f(\sigma(A))}|\lambda| = \|f|_{\sigma(A)}\|_\infty.
 \end{align*}
+\item[(iv)] Supongamos ahora que $f \geq 0$ y sea $x \in H$. Por definición de $f(A)$ es 
+\begin{align*}
+(f(A)x,x) = \sum_{n \geq 1} f(\lambda_n) \ip{e_n, x}^2 \geq 0
+\end{align*}
+pues por hipótesis sabemos que $f(\lambda_n) \geq 0$ para todo $n \geq 1$.
 \end{itemize}
 \end{proof}
 
@@ -171,18 +178,47 @@ f(A) = (f(A)-f(0)I) + f(0)I.
 
 \subsection{Aplicaciones}
 
-$\tpaint{\textbf{DECIR ALGO SOBRE RAICES, LA EXPONENCIAL, INVERSAS DE $A-zI$ ETC}}$
+\begin{theorem}  Sea $H$ un espacio de Hilbert y $A \in \mathscr{L}(H)$ un operador compacto y autoadjunto. Dado $n \in \N$, se tiene que 
+\begin{itemize}
+\item[(i)] Si $n$ es impar, existe un único operador $B \in \mathscr{L}(H)$ tal que $B^n = A$.
+\item[(ii)] Si $n$ es par, existe un operador $B \in \mathscr{L}(H)$ tal que $B^n = A$ sí y solo si $A \geq 0$. En tal caso $B$ es además el único con esta propiedad.
+\end{itemize}
+Notaremos $A^{1/n} := B$ en ambos casos a este operador, que de existir resulta siempre compacto.
+\end{theorem}
+\begin{proof}
+\end{proof}
+
+
+\begin{tcolorbox}
+\begin{theorem}[\textbf{Riesz-Markov-Kakutani}] Sea $X$ un espacio topológico Hausdorff y localmente compacto. Si $\psi : C(X) \to \R$ es un funcional lineal positivo, existe una única medida Borel regular $\mu$ en $X$ tal que
+\begin{align*}
+\psi(f) = \int_X f d\mu.
+\end{align*}
+para toda $f \in C(X)$.
+\end{theorem}
+\end{tcolorbox}
+
+\begin{definition} Sea $H$ un espacio de Hilbert y $A : H \to H$ un operador compacto y autoadjunto. Para cada $h \in H$, la aplicación 
+\begin{align*}
+f \in C(\sigma(A)) \mapsto \ip{f(A)h,h} \in \R
+\end{align*}
+resulta un funcional lineal positivo. El teorema de Riesz-Markov-Kakutani nos asegura entonces que existe una única medida Borel regular $\mu_h$ en $\sigma(A)$ que satisface
+\begin{align*}
+\ip{f(A)x,y} = \int_{\sigma(A)} f d\mu_h
+\end{align*}
+para toda $f : \sigma(A) \to \R$ continua. Llamamos a $\mu_h$ la \textbf{medida espectral de $A$ asociada a $h$}.
+\end{definition}
 
 \begin{proposition}
-Sea $H$ un espacio de Hilbert separable y $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Si $(g_n)_{n \geq 1} \subset \mathcal{B}(\R,\R)$ es una suceción de funciones medibles que convergen puntualmente a cierta función $g : \R \to \R$, y $(\|g_n\|_\infty)_{n \geq 1}$ es acotada, entonces la sucesión de operadores $\{g_n(A)\}_{n \geq 1} \subset \mathscr{L}(H)$ converge fuertemente a $g(A)$.
+Sea $H$ un espacio de Hilbert separable y $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Si $(g_n)_{n \geq 1} \subset \mathcal{C}(\sigma(A),\R)$ es una sucesión uniformemente acotada que converge puntualmente a cierta función $g : \sigma(A) \to \R$, la sucesión de operadores $\{g_n(A)\}_{n \geq 1} \subset \mathscr{L}(H)$ converge \textbf{fuertemente} a $g(A)$.
 \end{proposition}
 \begin{proof}
 
 \end{proof}
 
-\begin{theorem}[un caso particular del teorema ergódico de Von Neumann] Sea $H$ un espacio de Hilbert separable. Si $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto tal que $\sigma(A) \subset [-1,1]$, entonces los promedios de $A$ convergen fuertemente al proyector $\pi_A$ del subsepacio de puntos fijos de $A$. Es decir, si notamos $E_1 = \{x \in H : Ax = x\}$ y $\pi_A := P_{E_1}$, entonces
+\begin{theorem}[\textbf{un caso particular del teorema ergódico de Von Neumann}] Sea $H$ un espacio de Hilbert separable. Si $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto tal que $\sigma(A) \subset [-1,1]$, entonces los promedios de $A$ convergen \textbf{fuertemente} al proyector $\pi_A$ del subsepacio de puntos fijos de $A$. Es decir, si notamos $E_1 = \{x \in H : Ax = x\}$ y $\pi_A := P_{E_1}$, entonces
 \begin{align*}
-\frac{1}{n}\sum_{i=1}^{n}A^n \ \xrightarrow{n \to \infty} \ \pi_A.
+\frac{1}{n}\sum_{i=1}^{n}A^n \ \rightrightarrows \ \pi_A.
 \end{align*}
 \end{theorem}
 \begin{proof} Para cada $n \in \N$, definimos $g_n(x) := \frac{1}{n}\sum_{i=1}^nx^i$ para cada $x \in [-1,1]$. Tenemos así que $\frac{1}{n}\sum_{i=1}^{n}A^n = g_n(A)$. Por otro lado, la proyección $\pi_A$ coincide con la evaluación en $A$ de 
