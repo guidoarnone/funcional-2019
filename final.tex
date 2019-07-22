@@ -3,6 +3,7 @@
 \usepackage{amsmath,amsthm,amssymb,amsfonts}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{tocbibind}
 \usepackage[spanish]{babel}
 \usepackage{microtype}
 \usepackage{mathpazo}
@@ -22,11 +23,13 @@
 \renewcommand\qedsymbol{$\paint{\blacklozenge}$}
 \definecolor{color}{RGB}{75, 150, 80}
 \declaretheoremstyle[
-  headfont=\color{color}\normalfont\bfseries
+  headfont=\color{color}\normalfont\bfseries,
+  notefont=\color{color}\normalfont\bfseries
 ]{colored}
 \theoremstyle{colored}
 \newtheorem{definition}{Definición}[section]
 \newtheorem{theorem}{Teorema}[section]
+\newtheorem*{theorem*}{Teorema}
 \newtheorem{proposition}{Proposición}[section]
 \newtheorem{corollary}{Corolario}[section]
 \newtheorem{lemma}{Lema}[section]
@@ -82,36 +85,241 @@ $\paint{
 \tableofcontents
 
 \chapter{Preliminares}
-Repaso primero algunos resultados que vimos en la materia, y voy a necesitar para la demostración del teorema espectral.
-\subsection{Operadores Compactos}
-\subsection{Teoría Espectral}
-\chapter{El teorema espectral, cálculo funcional continuo y aplicaciones}
-\subsection{El teorema espectral}
-\begin{theorem}[espectral para operadores compactos y autoadjuntos] Sea $H$ un espacio de Hilbert separable. Si $A \in \mathscr{L}(H)$ es un operador compacto y autoadjunto, entonces existe una base ortonormal de autovectores $\{e_n\}_{n \geq 1}$ de $A$.
-\end{theorem}
-\subsection{Cálculo Funcional}
+Recuerdo primero algunos resultados que vimos en la materia y serán necesarios para la demostración del teorema espectral.
+\subsection{Proyectores, Teoremas de Representación y Sumas Hilbertianas}
 
-\begin{definition} Sea $H$ un espacio de Hilbert separable y $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Tenemos entonces una base ortonormal de autovectores $\{e_n\}_{n \geq 1}$ de $A$ con $\sigma(A) = \{\lambda_n\}_{n \geq 1}$. Si $f : \sigma(A) \to \R$ una función acotada, definimos
+\begin{theorem}[de la proyección ortogonal] Sea $H$ un espacio de Hilbert y $K \subset H$ un subcojunto convexo, cerrado y no vacío. Dado $f \in H$, existe un único $u \in K$ tal que
 \begin{align*}
-\ev_A(f)(x) := \sum_{n \geq 1}f(\lambda_n)\ip{e_n,x}e_n.
+\|f-u\| = \min_{v \in K}\|f-v\|.
 \end{align*}
-Notaremos $f(A) := \ev_A(f)$. Observemos que esta función está bien definida, es continua, y no depende de la base elegida. $\tpaint{\textbf{[HACER]}}$
-\end{definition}
-
-\subsection{Algunas propiedades básicas}
-
-\begin{theorem} Sea $H$ un espacio de Hilbert separable y $A \in \mathscr{L}(H)$ un operador compacto y autoadjunto. Entonces, la aplicación
+Más aún, el vector $u$ se caracteriza por satisfacer
 \begin{align*}
-\ev_A : B(\sigma(A),\R&) \to \mathscr{L}(H)\\
-&f \mapsto \ev_A(f)
+\begin{cases}
+u \in K\\
+\ip{f-u,v-u} \leq 0 \quad (\forall v \in K)
+\end{cases}
 \end{align*}
-es un morfismo de álgebras de Banach continuo que satisface $\|ev_A\| \leq 1$. Más aún, se tiene que $\ev_A(\mathsf{1}) = I$ y $\ev_A(\id) = A$. 
+Notamos $P_Kf := u$.
 \end{theorem}
 \begin{proof}
 content...
 \end{proof}
 
-\begin{proposition} Sea $H$ un espacio de Hilbert separable y $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Si $f : \sigma(A) \to \R$ es una función acotada en, entonces
+\begin{corollary} Sea $H$ un espacio de Hilbert y $M \leq H$ un subespacio cerrado. La aplicación $f \in H \mapsto P_Mf \in H$ es un operador continuo. Más aún, $P_M$ es un proyector y para cada $f \in H$ el vector $P_Mf$ se caracteriza como el único tal que $\ip{f-u,v} = 0$ para todo $v \in M$.
+\end{corollary}
+\begin{proof}
+content...
+\end{proof}
+
+\begin{theorem}[de representación de Riesz] Sea $H$ un espacio de Hilbert. Sin $\varphi \in H^*$ es un funcional lineal, existe un único $u \in H$ tal que
+\begin{align*}
+\langle \varphi, v\rangle  = \ip{u,v}
+\end{align*}
+para todo $v \in H$.
+\end{theorem}
+\begin{proof}
+content...
+\end{proof}
+
+\begin{definition} Sea $H$ un espacio de Hilbert y $\mathfrak{a} : H \times H \to \R$ una función bilineal. Decimos que $\mathfrak{a}$ es
+\begin{itemize}
+\item[$\paint{\bullet}$] \textbf{continua} si existe $C \geq 0$ tal que $|\mathfrak{a}(x,y)| \leq C \|x\|\|y\|$ para todo $x,y \in H$. 
+\item[$\paint{\bullet}$] \textbf{cohesiva} si existe $\theta > 0$ tal que $\mathfrak{a}(x,x) \geq \theta \|x\|^2$ para todo $x  \in H$.
+\end{itemize}
+\end{definition}
+\begin{remark} Si $\mathfrak{a}$ es una función bilineal continua y cohesiva en un espacio de Hilbert, induce un producto interno equivalente al original.
+\end{remark}
+
+\begin{theorem}[Stampacchia] Sea $H$ un espacio de Hilbert y $\mathfrak{a} : H \times H \to \R$ una función bilineal continua y cohesiva. Si $K \subset H$ es convexo cerrado y no vacío y $\varphi \in H^*$ un funcional lineal, entonces existe un único vector $u \in K$ tal que
+\begin{align*}
+\mathfrak{a}(u,v-u) \geq \langle \varphi, v-u \rangle \quad (\forall v \in K)
+\end{align*}
+Si además $\mathfrak{a}$ es simétrica, el vector $u$ se caracteriza por
+\begin{align*}
+\begin{cases}
+u \in K\\
+\frac{1}{2}\mathfrak{a}(u,u) - \langle \varphi, u \rangle = \inf_{v \in K}\frac{1}{2}\mathfrak{a}(v,v) - \langle \varphi, v \rangle
+\end{cases}
+\end{align*}
+\end{theorem}
+\begin{proof}
+content...
+\end{proof}
+
+\begin{definition} Sea $H$ un espacio de Hilbert y $(E_n)_{n \geq 1}$ una sucesión de subespacios cerrados de $H$. Se dice que $H$ es \textbf{suma hilbertiana} de $(E_n)_{n \geq 1}$ si 
+\begin{itemize}
+\item[$\paint{\bullet}$] $E_i \perp E_j$ si $i \neq j$, y
+\item[$\paint{\bullet}$] $\operatorname{gen} \ \{E_n\}_{n \geq 1}$ es denso.
+\end{itemize}
+Notamos $H = \bigoplus_{n = 1}^\infty E_n$.
+\end{definition}
+
+\begin{theorem} Sea $H$ un espacio de Hilbert con $H = \bigoplus_{n = 1}^\infty E_n$ y $u \in H$. Si notamos $u_n = P_{E_n}u$ para cada $n \in \N$, entonces
+\begin{itemize}
+\item[(i)] $u = \sum_{n \geq 1}u_n$.
+\item[(ii)] $\|u\|^2 = \sum_{n \geq 1}\|u_n\|^2$.
+\end{itemize}
+
+Recíprocamente, si tomamos $u_n \in E_n$ para cada $n \in \N$ y es $\sum_{n \geq 1}\|u_n\|^2 < \infty$, entonces $u := \sum_{n \geq 1}u_n$ converge y se tiene que $u_n = P_{E_n}u$ para cada $n \in \N$.
+\end{theorem}
+
+\begin{definition} Sea $H$ un espacio de Hilbert. Una sucesión $\{e_n\}_{n \geq 1}$ se dice una $\textbf{base hilbertiana}$ si
+\begin{itemize}
+\item[$\paint{\bullet}$] $\ip{e_n,e_m} = \delta_{nm}$ para todo $n,m \in \N$, y
+\item[$\paint{\bullet}$] $\operatorname{gen} \ \{e_n\}_{n \geq 1}$ es denso.
+\end{itemize}
+\end{definition}
+
+\begin{corollary} Sea $H$ un espacio de Hilbert. Si $\{e_n\}_{n \geq 1} \subset H$ es una sucesión ortonormal, entonces esta es una base hilbertiana si y sólo si 
+\begin{align*}
+u = \sum_{n \geq 1}(u,e_n)e_n \text{ y } \|u\|^2 = \sum_{n \geq 1}\|(u,e_n)\|^2.
+\end{align*}
+
+Recíprocamente, si $(\alpha_n)_{n \geq 1} \subset \ell^2$ entonces la serie $\sum_{n \geq 1}\alpha_n e_n$ converge en $H$ a un elemento, y su norma es exactamente $\sum_{n \geq 1}\alpha_n^2$.
+\end{corollary}
+\begin{proof}
+\end{proof}
+
+\begin{remark} Si $H$ admite una base Hilbertiana $\{e_n\}_{n \geq 1}$, la aplicación $u \in H \mapsto \{(u,e_n)\}_{n \geq 1} \in \ell^2$ es un isomorfismo isométrico.
+\end{remark}
+
+\begin{theorem} Un espacio de Hilbert separable de dimensión infinita admite una base hilbertiana.
+\end{theorem}
+\begin{proof}
+content...
+\end{proof}
+
+\subsection{Operadores Compactos}
+
+\begin{proposition} Si $E$ y $F$ dos espacios de Banach, el conjunto $\mathscr{K}(E,F)$ es un subsepacio cerrado de $\mathscr{L}(E,F)$.
+\end{proposition}
+\begin{proof}
+content...
+\end{proof}
+
+\begin{corollary} Sean $E$ y $F$ son espacios de Banach. Si $T \in \mathscr{L}(E,F)$ es un operador que es límite de operadores de rango finito, entonces es compacto.
+\end{corollary}
+\begin{proof}
+content...
+\end{proof}
+
+\begin{theorem} Sean $E$ un espacio de Banach y $H$ un espacio de Hilbert. Si $T \in \mathscr{L}(E,H)$ es un operador acotado, entonces existe una sucesión $(T_n)_{n \geq 1} \subset  \mathscr{L}(E,H)$ de operadores de rango finito tal que $T_n \rightrightarrows T$.
+\end{theorem}
+\begin{proof}
+content...
+\end{proof}
+
+\begin{remark} Sean $E,F$ y $G$ espacios de Banach y $T \in \mathscr{L}(E,F), S \in \mathscr{L}(F,G)$ operadores acotados. Si $S$ o $T$ son compactos $S \circ T$ lo es.
+\end{remark}
+
+\begin{theorem}[Alternativa de Fredholm] Sea $E$ un espacio de Banach y $T \in \mathscr{K}(E)$ un operador compacto. Entonces
+\begin{itemize}
+\item[(a)] $\dim N(I-T) < \infty$.
+\item[(b)] $R(I-T)$ es cerrado y $R(I-T) = {}^\perp N(I-T^*)$.
+\item[(c)] $N(I-T) = \{0\} \iff R(I-T) = E$.
+\item[(d)] $\dim N(I-T^*) = \dim N(I-T)$.
+\end{itemize} 
+\end{theorem}
+\begin{proof}
+content...
+\end{proof}
+
+\subsection{Teoría Espectral}
+
+\begin{proposition} Si $E$ un espacio de Banach y $T \in \mathscr{L}(E)$, el espectro de $T$ es compacto y $\sigma(T) \subset [-\|T\|,\|T\|]$.  
+\end{proposition}
+\begin{proof}
+content...
+\end{proof}
+
+\begin{theorem} Sea $E$ un espacio de Banach de dimensión infinita. Si $T \in \mathscr{K}(E)$ es un operador compacto, entonces
+\begin{itemize}
+\item[(i)] $0 \in \sigma(T)$.
+\item[(ii)] $\sigma(T) \setminus \{0\} = \sigma_p(T) \setminus \{0\}$.
+\item[(iii)] O bien $\sigma(T) = \{0\}$, o bien $\sigma(T)$ es finito, o bien es $\sigma(T) \setminus \{0\} = \{\lambda_n\}_{n \geq 1}$ con $\lambda_n \to 0$.
+\end{itemize} 
+\end{theorem}
+\begin{proof}
+content...
+\end{proof}
+
+\begin{theorem} Sea $H$ es un espacio de Hilbert y $T \in \mathscr{L}(H)$ un operador autoadjunto. Notando
+\begin{align*}
+m = \inf_{\|x\| = 1}(Tx,x) \ \text{ y } \ M = \sup_{\|x\| = 1}(Tx,x),
+\end{align*}
+se tiene que $\sigma(T) \subset [m,M]$ y $m,M \in \sigma(M)$. Más aún, es $\|T\| = \max\{\|m\|,\|M\|\}$.
+\end{theorem}
+\begin{proof}
+content...
+\end{proof}
+
+\chapter{El teorema espectral, cálculo funcional continuo y aplicaciones}
+\subsection{El teorema espectral}
+\begin{theorem}[espectral para operadores compactos y autoadjuntos] Sea $H$ un espacio de Hilbert separable. Si $A \in \mathscr{L}(H)$ es un operador compacto y autoadjunto, entonces existe una base ortonormal de autovectores $\{e_n\}_{n \geq 1}$ de $A$.
+\end{theorem}
+\begin{proof}
+content...
+\end{proof}
+
+\subsection{Cálculo Funcional}
+
+Extendiendo la noción de \textit{« polinomios evaluados en una matriz »}, el teorema espectral nos permitira darle sentido a la expresión $f(A)$ para un operador $A$ y cierta clase de funciones $f$. Concretamente, 
+
+\begin{definition} Sea $H$ un espacio de Hilbert separable y $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Tenemos entonces una base ortonormal de autovectores $\{e_n\}_{n \geq 1}$ de $A$ con $Ae_n = \lambda_ne_n$ y $\lambda_n \in \sigma(A)$. 
+
+Si $f : \sigma(A) \to \R$ una función acotada, definimos \textbf{la evaluación de $f$ en $A$} como
+\begin{align*}
+\ev_A(f)(x) := \sum_{n \geq 1}f(\lambda_n)\ip{e_n,x}e_n.
+\end{align*}
+Observemos que esta función está bien definida pues $\sum_{n \geq 1}f(\lambda_n)^2\ip{e_n,x}^2 \leq \|f\|^2_\infty \cdot \|x\|^2$, y más aún este argumento dice que resulta continua: como es
+\begin{align*}
+\|f(A)x\|^2 = \left\ip{\sum_{n \geq 1}f(\lambda_n)\ip{e_n,x}e_n \ , \ \sum_{m \geq 1}f(\lambda_m)\ip{e_m,x}e_m\right} = \sum_{n \geq 1}f(\lambda_n)^2\ip{e_n,x}^2 \leq \|f\|^2_\infty\|x\|^2,
+\end{align*}
+se tiene que $\|f(A)\| \leq \|f\|_\infty$. Notar además que esta definición no depende de la base: si $\{v_m\}_{m \geq 1}$ es otra base ortonormal de autovectores, y construimos $\widetilde{f(A)}$ reemplazando cada $e_n$ por $v_n$, entonces
+\begin{align*}
+\widetilde{f(A)}e_n = \sum_{v_m \in E_n}f(\lambda_m)(v_m,e_n)v_m = f(\lambda_n)\sum_{v_m \in E_n}(v_m,e_n)v_m = f(\lambda_n)e_n = f(A)e_n.
+\end{align*}
+Como ambos operadores son acotados y coinciden en una base hilbertiana, deben ser iguales.
+\end{definition}
+
+\paintline
+A partir de ahora $H$ denotará un espacio de Hilbert separable. Fijamos también un operador $A$ compacto y autoadjunto y una base hilbertiana $\{e_n\}_{n \geq 1}$ de autovectores de $A$ en el sentido anterior.
+
+Es decir, en vista del $\tpaint{Teorema 2.0.1}$ tomamos una base hilbertiana tal que para cada $n \in \N$ es $Ae_n = \lambda_ne_n$ con $\lambda_n \in \sigma(A)$, y más aún tal que cada autoespacio tenga por base a una subcolección de $\{e_n\}_{n \geq 1}$.
+\paintline
+
+\begin{theorem} La aplicación
+\begin{align*}
+\ev_A : B(\sigma(A),\R&) \to \mathscr{L}(H)\\
+&f \mapsto \ev_A(f)
+\end{align*}
+es un morfismo de álgebras de Banach continuo que satisface $\|ev_A\| \leq 1$. Más aún, se tiene que $\ev_A(\mathsf{1}) = I$ y $\ev_A(\id) = A$. Notaremos $f(A) := \ev_A(f)$.
+\end{theorem}
+\begin{proof} Al definir $\ev_A(f)$ vimos que se satisface $\|\ev_A(f)\| \leq \|f\|_\infty$. Por otro lado, es
+\begin{align*}
+\ev_A(\mathsf{1})x = \sum_{n \geq 1}\mathsf{1}(\lambda_n)\ip{e_n,x}e_n = \sum_{n \geq 1}\ip{e_n,x}e_n = x
+\end{align*}
+y 
+\begin{align*}
+\ev_A(\id)x = \sum_{n \geq 1}\id(\lambda_n)\ip{e_n,x}e_n = \sum_{n \geq 1}\lambda_n\ip{e_n,x}e_n = \sum_{n \geq 1}\ip{e_n,\lambda_nx}e_n = \sum_{n \geq 1}\ip{e_n,Ax}e_n = Ax,
+\end{align*}
+así que $\ev_A(\mathsf{1}) = I$ y $\ev_A(\id) = A$.
+
+La linealidad es consecuencia de la linealidad de las series: si $f,g : \sigma(A) \to \R$ son acotadas y $\mu \in \R$, entonces
+\begin{align*}
+(f+\mu g)(A)x &= \sum_{n \geq 1}(f+\mu g)(\lambda_n)\ip{e_n,x}e_n = \sum_{n \geq 1}f(\lambda_n)\ip{e_n,x}e_n + \mu\sum_{n \geq 1}g(\lambda_n)\ip{e_n,x}e_n\\
+&= f(A)x + \mu g(A)x = (f(A)+\mu g(A))x.
+\end{align*}
+
+Por último, veamos que $\ev_A$ es un morfismo de álgebras de Banach: si $f,g : \sigma(A) \to \R$, entonces
+\begin{align*}
+f(A)g(A)x &= f(A)\left[\sum_{n \geq 1}g(\lambda_n)(e_n,x)e_n\right] = \sum_{n \geq 1}g(\lambda_n)(e_n,x)[f(A)e_n]\\
+&= \sum_{n \geq 1}f(\lambda_n)g(\lambda_n)(e_n,x)e_n)x = fg(A)x
+\end{align*}
+para todo $x \in H$.
+\end{proof}
+
+\begin{proposition} Si $f : \sigma(A) \to \R$ es una función acotada, entonces
 \begin{itemize}
 \item[(i)] $\sigma(f(A)) = f(\sigma(A))$.
 \item[(ii)] $f(A)$ es autoadjunta.
@@ -119,7 +327,7 @@ content...
 \item[(iv)] Si $f \geq 0$ entonces $f(A) \geq 0$.
 \end{itemize}
 \end{proposition}
-\begin{proof} Fijemos una base ortonormal $\{e_n\}_{n \geq 1}$ de autovectores de $A$ con $Ae_n = \lambda_ne_n$ para cada $n \in \N$. 
+\begin{proof} Hacemos cada inciso por separado. 
 \begin{itemize}[listparindent = \parindent]
 \item[(i)] Si $\lambda_j \in \sigma(A)$, es
 \begin{align*}
@@ -153,12 +361,12 @@ pues por hipótesis sabemos que $f(\lambda_n) \geq 0$ para todo $n \geq 1$.
 Más aún, la aplicación $ev_A : \mathcal{C}(\R) \to \mathscr{L}(H)$ es el único morfismo de álgebras de Banach continuo que tiene a $I$ por imagen de $\mathsf{1}$ y $A$ por imagen de $\id$.
 \end{remark}
 
-\begin{proposition} Sea $H$ un espacio de Hilbert separable y $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Si $f : \R \to \R$ es una función continua, entonces existe un operador compacto $S \in \mathscr{K}(H)$ tal que
+\begin{proposition} Si $f : \R \to \R$ es una función continua, entonces existe un operador compacto $S \in \mathscr{K}(H)$ tal que
 \begin{align*}
 f(A) = S + f(0)I.
 \end{align*}
 \end{proposition}
-\begin{proof} Por el teorema de Stone-Weierstraß, sabemos que existe una sucesión de polinomios $(p_n)_{n \geq 1}$ tal que $p_n \to f$ fuertemente y en particular, es $p_n(0) \to f(0)$. Ahora, para cada $n \in \N$ definimos
+\begin{proof} Por el teorema de Stone-Weierstraß, sabemos que existe una sucesión de polinomios $(p_n)_{n \geq 1}$ tal que $p_n \to f$ uniformemente y en particular, es $p_n(0) \to f(0)$. Ahora, para cada $n \in \N$ definimos
 \begin{align*}
 q_n = p_n - p_n(0),
 \end{align*} 
@@ -173,29 +381,65 @@ f(A) = (f(A)-f(0)I) + f(0)I.
 \end{align*}  
 \end{proof}
 
-\begin{corollary} Sea $H$ un espacio de Hilbert separable y $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Si $f : \R \to \R$ es una función continua que se anula en $0$, el operador $f(A)$ resulta compacto. $\square$
+\begin{corollary} Si $f : \R \to \R$ es una función continua que se anula en $0$, el operador $f(A)$ resulta compacto. $\square$
 \end{corollary}
 
+\begin{remark} Aún cuando $f(A)$ no es compacto, la $\tpaint{Proposición }2.0.2$ nos dá información a través de la Alternativa de Fredholm. Por ejemplo, sabemos que el núcleo de la evaluación siempre es de dimensión finita.
+\end{remark}
+
+\begin{proposition} Si $f,g \in C(\R,\R)$ son dos funciones continuas, entonces $(f \circ g)(A) = f(g(A))$.
+\end{proposition}
+\begin{proof} En efecto, fijando una base ortonormal $\{e_n\}_{n \geq 1}$ de autovectores con $Ae_n = \lambda_ne_n$, ésta resulta una base ortonormal de autovectores de $g(A)$ con $g(A)e_n = g(\lambda_n)e_n$. Por lo tanto, para cada $x \in H$ es
+\begin{align*}
+f(g(A))x = \sum_{n \geq 1}f(g(\lambda_n))(e_n,x)e_n = \sum_{n \geq 1}(f \circ g)(\lambda_n)(e_n,x)e_n = (f \circ g)(A).
+\end{align*}
+\end{proof}
+
 \subsection{Aplicaciones}
+
+En primer lugar, veamos que todo operador $A$ compacto y autoadjunto \text{« tiene una raíz enésima »}. Esto es, para cada $n \in \N$ existe un operador $B$ tal que $B^n = A$.
 
 \begin{theorem}  Sea $H$ un espacio de Hilbert y $A \in \mathscr{L}(H)$ un operador compacto y autoadjunto. Dado $n \in \N$, se tiene que 
 \begin{itemize}
 \item[(i)] Si $n$ es impar, existe un único operador $B \in \mathscr{L}(H)$ tal que $B^n = A$.
-\item[(ii)] Si $n$ es par, existe un operador $B \in \mathscr{L}(H)$ tal que $B^n = A$ sí y solo si $A \geq 0$. En tal caso $B$ es además el único con esta propiedad.
+\item[(ii)] Si $n$ es par, existe un operador positivo $B \in \mathscr{L}(H)$ tal que $B^n = A$ sí y solo si $A \geq 0$. En tal caso existe un único operador $B$ positivo con esta propiedad.
 \end{itemize}
 Notaremos $A^{1/n} := B$ en ambos casos a este operador, que de existir resulta siempre compacto.
 \end{theorem}
-\begin{proof}
+\begin{proof} Para cada $n \geq 1$, definimos $f :t \in \sigma(A) \mapsto t^{1/n} \in \R$.
+\begin{itemize}[listparindent = \parindent] 
+\item[(i)] Sea $B = f_n(A)$. Por definición, es $B^n = f_n(A) \circ \cdots \circ f_n(A) = f_n^n(A) = id(A) = A$. Además, si $B'$ es tal que $B'^n = A$, entonces
+\begin{align*}
+B' = id(B') = (f_n^n \circ (t \mapsto t^n))(B') = f_n^n(B'^n) = f_n^n(A) = B.
+\end{align*}
+\item[(ii)] Recordemos que como $A$ es autoadjunta, es $\inf \sigma(A) = \inf_{\|x\| = 1} (Ax,x)$ y por lo tanto tenemos que $A \geq 0$ si y sólo si $\sigma(A) \subset [0,+\infty)$. 
+Esto nos permite hacer la misma construcción que antes para este caso, y como ahora es $f_n \geq 0$, de aquí se concluye que $A^{1/n} \geq 0$. Para la unicidad resta notar que si $B' \geq 0$, entonces $B' = |B'| = \sqrt{1/n}{B'^n} = A^{1/n}.$
+\end{itemize}
+
+Finalmente, como para todo $n \geq 1$ es $f_n(0) = 0$, sabemos que $A^{1/n}$ siempre resulta compacto.
 \end{proof}
 
+\paintline
+
+La siguiente aplicación es una adaptación del $\tpaint{Teorema 12.44}$ de $\cite{Rudin}$, que es una versión del teorema ergódico de Von Neumann para transformaciones unitarias,
 
 \begin{tcolorbox}
-\begin{theorem}[\textbf{Riesz-Markov-Kakutani}] Sea $X$ un espacio topológico Hausdorff y localmente compacto. Si $\psi : C(X) \to \R$ es un funcional lineal positivo, existe una única medida Borel regular $\mu$ en $X$ tal que
+\begin{theorem*} Si $H$ es un espacio de Hilbert y $B \in \mathscr{U}(H)$ una transformación unitaria, entonces para cada $x \in H$ los \textit{promedios} $\frac{1}{n}(x + Bx + \dots + B^{n-1}x)$ convergen puntualmente a un elemento $y \in H$.
+\end{theorem*}
+\end{tcolorbox}
+La demostración presente en $\cite{Rudin}$ hace uso del teorema espectral en un caso más general. Usando que los autovalores de una transformación unitaria yacen en el círculo de radio $1$, el teorema se reduce a un cálculo directo de convergencia puntual para una cierta sucesión de funciones.
+
+Siguiendo la idea de esta demostración pero en el caso de operadores compactos y autoadjuntos, definimos a continuación el concepto de medida espectral y con esto probamos que un resultado auxiliar de convergencia. 
+
+Concluimos con el $\tpaint{Teorema 2.0.4}$, el cual afirma que si $A$ es un operador compacto, autoadjunto y de norma $1$, entonces sus promedios convergen puntualmente a la proyección ortogonal del subespacio de sus puntos fijos.
+\\
+\begin{tcolorbox}
+\begin{theorem*}[\textbf{Riesz-Markov-Kakutani}] Sea $X$ un espacio topológico Hausdorff y localmente compacto. Si $\psi : C(X) \to \R$ es un funcional lineal positivo, existe una única medida Borel regular $\mu$ en $X$ tal que
 \begin{align*}
 \psi(f) = \int_X f d\mu.
 \end{align*}
 para toda $f \in C(X)$.
-\end{theorem}
+\end{theorem*}
 \end{tcolorbox}
 
 \begin{definition} Sea $H$ un espacio de Hilbert y $A : H \to H$ un operador compacto y autoadjunto. Para cada $h \in H$, la aplicación 
@@ -204,41 +448,63 @@ f \in C(\sigma(A)) \mapsto \ip{f(A)h,h} \in \R
 \end{align*}
 resulta un funcional lineal positivo. El teorema de Riesz-Markov-Kakutani nos asegura entonces que existe una única medida Borel regular $\mu_h$ en $\sigma(A)$ que satisface
 \begin{align*}
-\ip{f(A)x,y} = \int_{\sigma(A)} f d\mu_h
+\ip{f(A)h,h} = \int_{\sigma(A)} f d\mu_h
 \end{align*}
 para toda $f : \sigma(A) \to \R$ continua. Llamamos a $\mu_h$ la \textbf{medida espectral de $A$ asociada a $h$}.
 \end{definition}
 
 \begin{proposition}
-Sea $H$ un espacio de Hilbert separable y $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Si $(g_n)_{n \geq 1} \subset \mathcal{C}(\sigma(A),\R)$ es una sucesión uniformemente acotada que converge puntualmente a cierta función $g : \sigma(A) \to \R$, la sucesión de operadores $\{g_n(A)\}_{n \geq 1} \subset \mathscr{L}(H)$ converge \textbf{fuertemente} a $g(A)$.
+Sea $H$ un espacio de Hilbert separable y $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Si $(g_n)_{n \geq 1} \subset \mathcal{C}(\sigma(A),\R)$ es una sucesión uniformemente acotada que converge puntualmente a cierta función $g : \sigma(A) \to \R$, la sucesión de operadores $\{g_n(A)\}_{n \geq 1} \subset \mathscr{L}(H)$ \textbf{sot}-converge a $g(A)$.
 \end{proposition}
-\begin{proof}
+\begin{proof} Observemos que por el teorema de convergencia dominada, para cada $h \in H$ es
+\begin{align*}
+(g_n(A)h,h) = \int_{\sigma(A)}g_n d\mu_h \to \int_{\sigma(A)}g d\mu_h = (g(A)h,h).
+\end{align*}
+Usando la identidad de polarización, vemos que $(g_n(A)x,y) \to (g(A)x,y)$ para todo $x,y \in H$. Por lo tanto tenemos convergencia débil,
+\begin{align*}
+g_n(A)x \rightharpoonup g(A)x
+\end{align*}
+para cada $x \in H$. Para terminar alcanza ver que siempre es $\|g_n(A)x\| \to \|g(A)x\|$.
 
+Por hipótesis sabemos que las funciones $(g_n^2)_{n \geq 1}$ también están uniformemente acotadas y $g_n^2 \to g^2$ puntualmente. Por lo tanto, el argumento anterior nos dice que para cada $x \in H$ es
+\begin{align*}
+\|g_n(A)x\|^2 = \ip{g_n(A)x,g_n(A)x} = \ip{g_n(A)g_n(A)x,x} = \ip{g_n^2(A)x,x} \to \ip{g^2(A)x,x} = \|g(A)x\|^2. 
+\end{align*}
+y tomando raíces vemos que $\|g_n(A)x\| \to \|g(A)x\|$.
 \end{proof}
 
-\begin{theorem}[\textbf{un caso particular del teorema ergódico de Von Neumann}] Sea $H$ un espacio de Hilbert separable. Si $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto tal que $\sigma(A) \subset [-1,1]$, entonces los promedios de $A$ convergen \textbf{fuertemente} al proyector $\pi_A$ del subsepacio de puntos fijos de $A$. Es decir, si notamos $E_1 = \{x \in H : Ax = x\}$ y $\pi_A := P_{E_1}$, entonces
+\begin{theorem}[un caso particular del teorema ergódico de Von Neumann] Sea $H$ un espacio de Hilbert separable. Si $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto tal que $\|A\| = 1$, entonces los promedios de $A$ \textbf{sot}-convergen al proyector $\pi_A$ del subsepacio de puntos fijos de $A$. Es decir, si notamos $E_1 = \{x \in H : Ax = x\}$ y $\pi_A := P_{E_1}$, entonces
 \begin{align*}
-\frac{1}{n}\sum_{i=1}^{n}A^n \ \rightrightarrows \ \pi_A.
+\frac{1}{n}\sum_{i=1}^{n}A^ix \ \xrightarrow{n \to \infty} \ \pi_Ax.
 \end{align*}
+para todo $x \in H$.
 \end{theorem}
-\begin{proof} Para cada $n \in \N$, definimos $g_n(x) := \frac{1}{n}\sum_{i=1}^nx^i$ para cada $x \in [-1,1]$. Tenemos así que $\frac{1}{n}\sum_{i=1}^{n}A^n = g_n(A)$. Por otro lado, la proyección $\pi_A$ coincide con la evaluación en $A$ de 
+\begin{proof} Notemos en primer lugar que $\sigma(A) \subset [-\|A\|,\|A\|] = [-1,1]$. Para cada $n \in \N$, definimos $g_n(x) := \frac{1}{n}\sum_{i=1}^nx^i$ para cada $x \in [-1,1]$. Tenemos así que $\frac{1}{n}\sum_{i=1}^{n}A^i = g_n(A)$. Por otro lado, la proyección $\pi_A$ coincide con la evaluación en $A$ de 
 \begin{align*}
-g(x) = \begin{cases}
+g(x) := \begin{cases}
 1 &\text{si $x = 1$}\\
 0 &\text{en caso contrario}
 \end{cases}
 \end{align*}
 
-En vista de la $\tpaint{Proposición 2.2.3}$, basta probar que la sucesión $(g_n)_{n \geq 1}$ está uniformemente acotada y converge puntualmente a $g$. Lo primero se deduce de que si $x \in [-1,1]$ entonces
+En vista de la $\tpaint{Proposición 2.0.4}$, basta probar que la sucesión $(g_n)_{n \geq 1}$ está uniformemente acotada y converge puntualmente a $g$. Lo primero se deduce de que si $x \in [-1,1]$ entonces
 \begin{align*}
 |g_n(x)| \leq \frac{1}{n}\sum_{i=1}^n|x|^i \leq \frac{1}{n}\sum_{i=1}^n1 = 1.
 \end{align*}
 
 Ahora veamos la convergencia puntual. En primer lugar, la sucesión $(g_n(1))_{n \geq 1}$ es constantemente $1$ y por lo tanto converge a $g(1) = 1$. Por otro lado, sabemos que $g_n(-1)$ es cero para $n$ par y $-1/n$ para $n$ impar. De aquí se ve que entonces que $g_n(-1) \to 0 = g(-1)$. Finalmente, si $\lambda \in (-1,1)$ entonces
 \begin{align*}
-|g_n(\lambda)| \leq \frac{1}{n}\sum_{i=1}^n|x|^i \leq \frac{1}{n}\sum_{i \geq 1}|x|^i = \frac{1}{n} \cdot \frac{1}{1-|\lambda|} \to 0.
+|g_n(\lambda)| \leq \frac{1}{n}\sum_{i=1}^n|\lambda|^i \leq \frac{1}{n}\sum_{i \geq 0}|\lambda|^i = \frac{1}{n} \cdot \frac{1}{1-|\lambda|} \to 0.
 \end{align*}
 Consecuentemente, debe ser $g_n(\lambda) \to 0 = g(\lambda)$.
 \end{proof}
+\begin{thebibliography}{}
+\bibitem{Brezis} H. Brezis. \textit{Functional Analysis, Sobolev Spaces and Partial Differential Equations}. Springer, 2010.
+\bibitem{ReedSimon} M. Reed, B. Simon. \textit{Methods of Modern Mathematical Physics}.  Academic Press Inc., 1980.
+\bibitem{Rudin} W. Rudin. \textit{Functional Analysis}. International Series in Pure and Applied Mathematics, McGraw-Hill, 1991.
+\bibitem{Teschl} G. Teschl. \textit{Topics in Real and Functional Analysis}, versión del 9/7/19 (https://www.mat.univie.ac.at/~gerald/ftp/book-fa/fa.pdf).
 
+\end{thebibliography}
 \end{document}
+
+
