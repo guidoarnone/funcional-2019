@@ -88,6 +88,15 @@ $\paint{
 Recuerdo primero algunos resultados que vimos en la materia y serán necesarios para la demostración del teorema espectral.
 \subsection{Proyectores, Teoremas de Representación y Sumas Hilbertianas}
 
+\begin{proposition} Sea $H$ un espacio de hilbert y $S \leq H$ un subespacio. 
+\begin{itemize}
+\item[(i)] $S^\perp$ es cerrado.
+\item[(i)] $S^{\perp\perp} = \overline{S}$.
+\item[(iii)] $S^\perp = H$ si y sólo si $S = \{0\}$.
+\item[(iv)] $S$ es denso si y sólo si $S^\perp = H$
+\end{itemize}
+\end{proposition}
+
 \begin{theorem}[de la proyección ortogonal] Sea $H$ un espacio de Hilbert y $K \subset H$ un subcojunto convexo, cerrado y no vacío. Dado $f \in H$, existe un único $u \in K$ tal que
 \begin{align*}
 \|f-u\| = \min_{v \in K}\|f-v\|.
@@ -175,10 +184,8 @@ Recíprocamente, si tomamos $u_n \in E_n$ para cada $n \in \N$ y es $\sum_{n \ge
 u = \sum_{n \geq 1}(u,e_n)e_n \text{ y } \|u\|^2 = \sum_{n \geq 1}\|(u,e_n)\|^2.
 \end{align*}
 
-Recíprocamente, si $(\alpha_n)_{n \geq 1} \subset \ell^2$ entonces la serie $\sum_{n \geq 1}\alpha_n e_n$ converge en $H$ a un elemento, y su norma es exactamente $\sum_{n \geq 1}\alpha_n^2$.
+Recíprocamente, si $(\alpha_n)_{n \geq 1} \subset \ell^2$ entonces la serie $\sum_{n \geq 1}\alpha_n e_n$ converge en $H$ a un elemento, y su norma es exactamente $\sum_{n \geq 1}\alpha_n^2$. $\square$.
 \end{corollary}
-\begin{proof}
-\end{proof}
 
 \begin{remark} Si $H$ admite una base Hilbertiana $\{e_n\}_{n \geq 1}$, la aplicación $u \in H \mapsto \{(u,e_n)\}_{n \geq 1} \in \ell^2$ es un isomorfismo isométrico.
 \end{remark}
@@ -191,25 +198,42 @@ content...
 
 \subsection{Operadores Compactos}
 
+\begin{definition} Sean $E$ y $F$ dos espacios de Banach. Un operador $T \in \mathscr{L}(E,F)$ se dice \textbf{compacto} si $\overline{T(B_E)}$ es compacto. Equivalentemente, el operador $T$ es compacto si para toda sucesión acotada $\{x_n\}_{n \geq 1} \subset E$ la sucesión $\{Tx_n\}_{n \geq 1} \subset F$ es precompacta.
+\end{definition}
+
 \begin{proposition} Si $E$ y $F$ dos espacios de Banach, el conjunto $\mathscr{K}(E,F)$ es un subsepacio cerrado de $\mathscr{L}(E,F)$.
 \end{proposition}
-\begin{proof}
-content...
+\begin{proof} Supongamos que $T_{n} \rightrightarrows T$ para cierta sucesión $\{T_n\}_{n \geq 1} \subset \mathscr{K}(E)$ de operadores compactos. Veamos que $\overline{T(B_E)}$ es compacto, o equivalentemente, que $T(B_E)$ es totalmente acotada.
+
+Fijemos $\eps > 0$ y tomemos $n_0 \in \N$ tal que si $n > n_0$ entonces $\|T-T_{n_0}\| < \eps/2$. Como $T_{n_0}$ es un operador compacto, existen $f_1, \dots, f_j \in E$ tales que
+\begin{align*}
+T_{n_0}(B_E) \subset \bigcup_{s=1}^{j}B_{\eps/2}(f_s).
+\end{align*}
+Afirmamos entonces que $T(B_E) \subset \bigcup_{s=1}^{j}B_{\eps}(f_s)$. En efecto, si $x \in B_E$, entonces existe $s \in \natzero{j}$ tal que $T_{n_0}x \in B_{\eps/2}(f_s)$ y por lo tanto, es
+\begin{align*}
+\|Tx-f_s\| \leq \|Tx-T_{n_0}x\| + \|T_{n_0}x - f_s\| < \eps/2 + \eps/2 = \eps.
+\end{align*}
 \end{proof}
 
 \begin{corollary} Sean $E$ y $F$ son espacios de Banach. Si $T \in \mathscr{L}(E,F)$ es un operador que es límite de operadores de rango finito, entonces es compacto.
 \end{corollary}
-\begin{proof}
-content...
+\begin{proof} Como los operadores compactos forman un subespacio cerrado, resta notar que un operador de rango finito siempre es compacto.
 \end{proof}
 
 \begin{theorem} Sean $E$ un espacio de Banach y $H$ un espacio de Hilbert. Si $T \in \mathscr{L}(E,H)$ es un operador acotado, entonces existe una sucesión $(T_n)_{n \geq 1} \subset  \mathscr{L}(E,H)$ de operadores de rango finito tal que $T_n \rightrightarrows T$.
 \end{theorem}
-\begin{proof}
-content...
+\begin{proof} Veamos equivalentemente que los operadores de rango finito son densos en los operadores compactos.
+
+Sea $\eps > 0$. Como $T$ es compacto, existen $f_1, \dots, f_j \in E$ tales que
+$\overline{T(B_E)} \subset \bigcup_{s=1}^jB_\eps(f_j)$. Definamos ahora $G = \langle f_1, \dots, f_j \rangle$. Luego $T_\eps = P_{G_\eps}T$ es de rango finito y si $x \in B_E$ con $Tx \in B_\eps(f_s)$, entonces 
+\begin{align*}
+\|T_\eps x - Tx\| &\leq \|T_\eps x - f_s\| + \|f_s -Tx\| = \|P_{G_\eps}(Tx - f_s)\| + \|f_s -Tx\|\\
+&\leq \|P_{G_\eps}\|\|Tx - f_s\| + \|f_s - Tx\| \leq 2\eps,
+\end{align*}
+lo que prueba que $\|T_\eps -T\| \leq 2\eps$.
 \end{proof}
 
-\begin{remark} Sean $E,F$ y $G$ espacios de Banach y $T \in \mathscr{L}(E,F), S \in \mathscr{L}(F,G)$ operadores acotados. Si $S$ o $T$ son compactos $S \circ T$ lo es.
+\begin{remark} Sean $E,F$ y $G$ espacios de Banach y $T \in \mathscr{L}(E,F), S \in \mathscr{L}(F,G)$ operadores acotados. Si $S$ o $T$ son compactos, $ST$ lo es.
 \end{remark}
 
 \begin{theorem}[Alternativa de Fredholm] Sea $E$ un espacio de Banach y $T \in \mathscr{K}(E)$ un operador compacto. Entonces
@@ -226,10 +250,44 @@ content...
 
 \subsection{Teoría Espectral}
 
-\begin{proposition} Si $E$ un espacio de Banach y $T \in \mathscr{L}(E)$, el espectro de $T$ es compacto y $\sigma(T) \subset [-\|T\|,\|T\|]$.  
+\begin{definition} Sea $E$ un espacio de Banach y $T \in \mathscr{L}(E)$ un operador acotado.
+El \textbf{espectro} de $T$ es el conjunto
+\begin{align*}
+\sigma(T) := \{\lambda \in \R : T-\lambda I \text{ no es inversible} \},
+\end{align*}
+y el \textbf{espectro puntual} es
+\begin{align*}
+\sigma_p(T) = \{\lambda \in \R : \ker(T-\lambda I) \neq \{0\} \ \}.
+\end{align*}
+Definimos también la \textbf{resolvente} de $T$ como $\rho(T) := \R \setminus \sigma(T)$.
+\end{definition}
+
+\begin{proposition} Si $E$ un espacio de Banach y $T \in \mathscr{L}(E)$ un operador acotado, el espectro de $T$ es compacto y $\sigma(T) \subset [-\|T\|,\|T\|]$.  
 \end{proposition}
-\begin{proof}
-content...
+\begin{proof} Veamos primer que $\sigma(T) \subset [-\|T\|,\|T\|]$. Consideremos $\lambda \in \R$ tal que $|\lambda| > \|T\| \geq 0$ y veamos que $\lambda \in \rho(T)$.
+
+Dicho de otra forma, veamos que para todo $y \in E$ la ecuación
+\begin{align*}
+x = \frac{1}{\lambda}(Tx - y)
+\end{align*}
+tiene solución única. En efecto, por el teorema de punto fijo de Banach basta notar que la aplicación $J(x) := \frac{1}{\lambda}(Tx-y)$ es una contracción estricta, pues dados $u,v \in E$ es
+\begin{align*}
+\|J(u)-J(v)\| = \frac{1}{|\lambda|}\|T(u-v)\| \leq \frac{\|T\|}{|\lambda|}\|u-v\|
+\end{align*}
+y por hipótesis sabemos que $\frac{\|T\|}{|\lambda|} < 1$.
+
+Para terminar, veamos que el espectro es cerrado mostrando que la resolvente es abierta. Fijemos $\lambda_0 \in \rho(T)$ y sea $\lambda \in \R$. Ahora, la aplicación
+\begin{align*}
+T-\lambda I = T-\lambda_0 I + (\lambda_0 - \lambda)I
+\end{align*} 
+será biyectiva si y sólo si para cada $y \in E$ la ecuación 
+\begin{align*}
+x = (T-\lambda_0 I)^{-1}y + (\lambda-\lambda_0)(T-\lambda_0 I)^{-1}x
+\end{align*}
+tiene solución única. Esto se satisface en particular cuando la aplicación $\widetilde{J}(x) := (T-\lambda_0 I)^{-1}y + (\lambda-\lambda_0)(T-\lambda_0 I)^{-1}x$ es contractiva, y con el mismo argumento que antes, vemos que esto se puede asegurar si
+\begin{align*}
+|\lambda-\lambda_0| < \|(T-\lambda_0 I)^{-1}\|^{-1}.
+\end{align*}
 \end{proof}
 
 \begin{theorem} Sea $E$ un espacio de Banach de dimensión infinita. Si $T \in \mathscr{K}(E)$ es un operador compacto, entonces
@@ -239,9 +297,34 @@ content...
 \item[(iii)] O bien $\sigma(T) = \{0\}$, o bien $\sigma(T)$ es finito, o bien es $\sigma(T) \setminus \{0\} = \{\lambda_n\}_{n \geq 1}$ con $\lambda_n \to 0$.
 \end{itemize} 
 \end{theorem}
-\begin{proof}
-content...
+\begin{proof} Hacemos cada inciso por separado.
+\begin{itemize}[listparindent = \parindent]
+\item[(i)] Si $0$ no perteneciese al espectro de $T$, éste sería un operador inversible. Pero como a su vez es compacto, tendríamos que $I = T \circ T^{-1}$ es compacta, lo cual nunca ocurre en dimensión infinita.
+\item[(ii)] Sea $\lambda \in \sigma(T) \setminus \{0\}$. Notemos que $T-\lambda I$ es inversible si y sólo si lo es $\lambda^{-1}T-I$. Por la Alternativa de Fredholm, éste último es biyectivo si y sólo si es inyectivo. En consecuencia $\lambda$ pertenece al espectro puntual de $T$.
+\item[(iii)] Como el espectro es compacto, basta ver que para cada $n \in \N$  el conjunto
+\begin{align*}
+\sigma(T) \cap \left\{\lambda \in \R : |\lambda| \geq \frac{1}{n}\right\}
+\end{align*}
+es finito. En particular este es discreto, así que debe ser contable. De ser infinito, esto dice además que $\sigma(T)$ tiene a $0$ como punto de acumulación y podemos entonces reordenar sus elementos de forma que resulten una sucesión $\{\lambda\}_{n \in \N}$ tal que $\lambda_n \to 0$.
+
+Si no fuera así, existiría por compacidad una sucesión $\{\lambda_n\}_{n \geq 1} \subset \sigma(T)$ tal que $\lambda_n \to \lambda \neq 0$. Veamos que esto esto es absurdo. En particular tendríamos para cada $n \in \N$ un vector unitario $e_n \in \ker (T-\lambda I)$. 
+
+Como la colección $\{e_n\}_{n \geq 1}$ es linealmente independiente,  notando $E_n = \langle e_1, \dots, e_n \rangle$ obtenemos una sucesión estrictamente creciente de subespacios cerrados que satisfacen $(T-\lambda_nI)(E_n) \subset E_{n-1}$.
+
+Por el lema de Riesz, existen vectores unitarios $u_{n+1} \in E_n$ tales que
+\begin{align*}
+\frac{1}{2} \leq d(u_{n+1},E_n)
+\end{align*}
+para todo $n \geq 1$, y podemos definir entonces $v_n := \lambda_n^{-1}u_n$. Notemos que como $\{\lambda_n\}_{n \geq 1}$ converge y los vectores $\{u_n\}_{n \geq 1}$, esta es una sucesión acotada. Sin embargo, dados $1 < m < n$ se tiene que
+\begin{align*}
+\|Tv_m-Tv_n\| = \left\|\overbrace{\lambda_n^{-1}(T-\lambda_nI)u_n}^{\in E_{n-1}} - \overbrace{\lambda_m^{-1}(T-\lambda_mI)u_m}^{\in E_{m-1} \subset E_{n-1}} + u_n - u_m \right\| \geq d(u_n,E_{n-1}) \geq \frac{1}{2},
+\end{align*}
+lo que contradice la compacidad de $T$.
+\end{itemize}
 \end{proof}
+
+\begin{definition} Sea $H$ un espacio de Hilbert y $T \in \mathscr{L}(H)$ Decimos que $T$ es \textbf{autoadjunto} si para todo $x,y \in H$ se tiene que $\ip{Tx,y} = \ip{x,Ty}$.
+\end{definition}
 
 \begin{theorem} Sea $H$ es un espacio de Hilbert y $T \in \mathscr{L}(H)$ un operador autoadjunto. Notando
 \begin{align*}
@@ -249,189 +332,269 @@ m = \inf_{\|x\| = 1}(Tx,x) \ \text{ y } \ M = \sup_{\|x\| = 1}(Tx,x),
 \end{align*}
 se tiene que $\sigma(T) \subset [m,M]$ y $m,M \in \sigma(M)$. Más aún, es $\|T\| = \max\{\|m\|,\|M\|\}$.
 \end{theorem}
-\begin{proof}
-content...
+\begin{proof} Por simetría (tomando $-T$) basta probar las afirmaciones sobre $M$. En primer lugar, sea $\lambda > M$ y veamos que $\lambda \in \rho(T)$. Como para todo $x \in H$ es
+\begin{align*}
+\ip{Tx,x} \leq M \|x\|^2,
+\end{align*}
+se tiene que
+\begin{align*}
+(\lambda x - Tx,x) \geq (\lambda - M)\|x\|^2.
+\end{align*}
+
+Al ser $\lambda - M > 0$, el cálculo anterior nos dice que la forma bilineal
+\begin{align*}
+\mathfrak{a} : &H \times H \to \R\\
+&(x,y) \mapsto (\lambda x -T x, y)
+\end{align*}
+es continua y cohesiva. El teorema de Stampacchia nos asegura entonces que para todo $y \in H$ existe un único elemento $x \in H$ tal que $\mathfrak{a}(x,-) \equiv \ip{y,-}$.
+
+Dicho de otra forma, la ecuación
+\begin{align*}
+(\lambda I -T)x = y
+\end{align*}
+tiene solución única para todo $y \in H$, y en consecuencia $T- \lambda I$ es inversible.
+
+Veamos ahora que $M \in \sigma(T)$. Definimos ahora $\mathfrak{a}(x,y) := (Mx-Tx,y)$. Como $T$ es autoadjunta sabemos que $\mathfrak{a}$ es simétrica y positiva. Esto dice que esta función \textit{«debe satisfacer Cauchy-Schwarz»}, 
+\begin{align*}
+|\mathfrak{a}(x,y)| \leq \mathfrak{a}(x,x)^{1/2} \cdot \mathfrak{a}(y,y)^{1/2} \quad (\forall x,y \in H).
+\end{align*}
+
+Como $\mathfrak{a}(y,y) \leq (|M|+\|T\|)\|y\|^2$, poniendo $y = Mx-Tx$ es
+\begin{align*}
+\|Mx-Tx\|^2 \leq \mathfrak{a}(x,x)^{1/2}(|M|+\|T\|)^{1/2} \cdot \|Mx-Tx\|
+\end{align*}
+y  notando $C = (|M|+\|T\|)^{1/2}$ en definitiva obtenemos que
+\begin{align*}
+\|Mx-Tx\| \leq C \cdot \mathfrak{a}(x,x)^{1/2},
+\end{align*}
+para todo $x \in H$.
+
+Si ahora tomamos $\{x_n\}_{n \geq 1}$ unitarios tales que $\ip{Tx_n,x_x} \to M$, vemos que $MI-T$ no está acotado inferiormente pues
+\begin{align*}
+\|(M I -T )x_n\| \leq \mathfrak{a}(x_n,x_n)^{1/2} \to 0.
+\end{align*}
+Consecuentemente $T-M I$ no puede ser inversible, o lo que es lo mismo, debe ser $M \in \sigma(T)$.
+
+Por último, si definimos $\mu := \max\{|m|,|M|\}$ entonces dados $x,y \in H$, al expandir $\mathfrak{a}(v,v)$ para $v \in \{x+y,x-y\}$ y restar vemos que
+\begin{align*}
+4\ip{Tx,y}  = \ip{T(x+y),x+y}-\ip{T(x-y),x-y} \leq M\|x+y\|^2 - m\|x-y\|^2
+\end{align*}
+para todo $x,y \in H$. Desarrollando el lado derecho, llegamos a 
+\begin{align*}
+|\ip{Tx,y}| \leq \mu \left(\frac{\|x\|^2 + \|y\|^2}{2}\right)
+\end{align*}
+y más aún, si $0 \neq \alpha \in \R$ debe ser
+\begin{align*}
+|\ip{Tx,y}| = |\ip{T\alpha x, \alpha^{-1}y}| = \mu \left(\alpha^2\frac{\|x\|^2 + \alpha^{-2}\|y\|^2}{2}\right).
+\end{align*}
+
+Si $\|x\| \neq 0$, tomando $\alpha = \|y\|/\|x\|$ es $|\ip{Tx,y}| \leq \mu \|x\|\|y\|$ y finalmente se obtiene
+\begin{align*}
+\|T\| = \sup_{\|x\| = 1}\|Tx\| = \sup_{\|x\|,\|y\| = 1} |(Tx,y)| \leq \mu.
+\end{align*}
 \end{proof}
+
+\begin{corollary} Sea $H$ un espacio de Hilbert y $T \in \mathscr{L}(H)$ un operador autoadjunto. Si $\sigma(T) = \{0\}$, es $T = 0$. $\square$
+\end{corollary}
 
 \chapter{El teorema espectral, cálculo funcional continuo y aplicaciones}
 \subsection{El teorema espectral}
-\begin{theorem}[espectral para operadores compactos y autoadjuntos] Sea $H$ un espacio de Hilbert separable. Si $A \in \mathscr{L}(H)$ es un operador compacto y autoadjunto, entonces existe una base ortonormal de autovectores $\{e_n\}_{n \geq 1}$ de $A$.
+\begin{theorem}[espectral para operadores compactos y autoadjuntos] Sea $H$ un espacio de Hilbert separable. Si $T \in \mathscr{L}(H)$ es un operador compacto y autoadjunto, entonces existe una base ortonormal de autovectores $\{e_n\}_{n \geq 1}$ de $T$.
 \end{theorem}
-\begin{proof}
-content...
+\begin{proof} Como $T$ es compacto, sabemos que $\sigma(T) \setminus \{0\} = \sigma_p(T) \setminus \{0\}$ y $\sigma_p(T) = \{\lambda_n\}_{n \in F}$ para cierto $F$ finito o numerable. Podemos suponer además que $\sigma(T) \neq \{0\}$, pues $T$ es nula en caso contrario. Notando $\lambda_0 := 0$ y $F_0 = F \cup \{0\}$, definimos
+\begin{align*}
+E_n := \ker (T - \lambda_nI)
+\end{align*} 
+para cada $n \in F_0$. 
+
+Afirmamos que $H$ es la suma hilbertiana de $(E_n)_{n \in F_0}$. En primer lugar, sabemos que $E_i \perp E_j$ si $i \neq j$ pues para cada $x \in E_i$ e $y \in E_j$ es
+\begin{align*}
+\lambda_i(x,y) = (\lambda_ix,y) = (Tx,y) = (x,Ty) = (x,\lambda_jy) = \lambda_j(x,y),
+\end{align*}
+y esto implica que $\ip{x,y} = 0$. 
+
+Por último, para concluir que $D = \operatorname{gen} \ \{E_n\}_{m \in F_0}$ es denso veamos que $D^\perp = 0$. Dado que $T(D) \subset D$, sabemos que $T(D^\perp) \subset D^\perp$ y podemos considerar entonces el operador $T_0 \equiv T|_{D^\perp}^{D^\perp}$, que es autoadjunto (y compacto). Se tiene además que $\sigma(T) = \{0\}$, ya que si $u \in D^\perp$ es tal que $T_0u = Tu = \lambda u$ para cierto $\lambda \neq 0$, es entonces $u \in D \cap D^\perp = \{0\}$.
+
+Como $T_0$ es autoadjunto y sólo tiene a cero en su espectro, es el operador nulo. Por lo tanto, tenemos que
+\begin{align*}
+D^\perp \subset \ker T \subset D,
+\end{align*}
+lo que muestra que $D^\perp = \{0\}$.
+
+Para terminar, notemos que para cada $n \in F$ el subespacio $E_n$ es de dimensión finita y por lo tanto posee una base ortonormal. Por otro lado, como $H$ es separable, sabemos que existe una base ortonormal $E_0 = \ker T$. En consecuencia, la unión de las bases de cada $E_n$ con $n \in F_0$ nos provee de una base de autovectores de $T$.
 \end{proof}
 
 \subsection{Cálculo Funcional}
 
-Extendiendo la noción de \textit{« polinomios evaluados en una matriz »}, el teorema espectral nos permitira darle sentido a la expresión $f(A)$ para un operador $A$ y cierta clase de funciones $f$. Concretamente, 
+Extendiendo la noción de \textit{«polinomios evaluados en una matriz»}, el teorema espectral nos permitira darle sentido a la expresión $f(T)$ para un operador compacto y autoadjunto $T$ y cierta clase de funciones $f$. Concretamente, 
 
-\begin{definition} Sea $H$ un espacio de Hilbert separable y $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Tenemos entonces una base ortonormal de autovectores $\{e_n\}_{n \geq 1}$ de $A$ con $Ae_n = \lambda_ne_n$ y $\lambda_n \in \sigma(A)$. 
+\begin{definition} Sea $H$ un espacio de Hilbert separable y $T \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Tenemos entonces una base ortonormal de autovectores $\{e_n\}_{n \geq 1}$ de $T$ con $Te_n = \lambda_ne_n$ y $\lambda_n \in \sigma(T)$. 
 
-Si $f : \sigma(A) \to \R$ una función acotada, definimos \textbf{la evaluación de $f$ en $A$} como
+Si $f : \sigma(T) \to \R$ una función acotada, definimos \textbf{la evaluación de $f$ en $T$} como
 \begin{align*}
-\ev_A(f)(x) := \sum_{n \geq 1}f(\lambda_n)\ip{e_n,x}e_n.
+\ev_T(f)(x) := \sum_{n \geq 1}f(\lambda_n)\ip{e_n,x}e_n.
 \end{align*}
 Observemos que esta función está bien definida pues $\sum_{n \geq 1}f(\lambda_n)^2\ip{e_n,x}^2 \leq \|f\|^2_\infty \cdot \|x\|^2$, y más aún este argumento dice que resulta continua: como es
 \begin{align*}
-\|f(A)x\|^2 = \left\ip{\sum_{n \geq 1}f(\lambda_n)\ip{e_n,x}e_n \ , \ \sum_{m \geq 1}f(\lambda_m)\ip{e_m,x}e_m\right} = \sum_{n \geq 1}f(\lambda_n)^2\ip{e_n,x}^2 \leq \|f\|^2_\infty\|x\|^2,
+\|f(T)x\|^2 = \left\ip{\sum_{n \geq 1}f(\lambda_n)\ip{e_n,x}e_n \ , \ \sum_{m \geq 1}f(\lambda_m)\ip{e_m,x}e_m\right} = \sum_{n \geq 1}f(\lambda_n)^2\ip{e_n,x}^2 \leq \|f\|^2_\infty\|x\|^2,
 \end{align*}
-se tiene que $\|f(A)\| \leq \|f\|_\infty$. Notar además que esta definición no depende de la base: si $\{v_m\}_{m \geq 1}$ es otra base ortonormal de autovectores, y construimos $\widetilde{f(A)}$ reemplazando cada $e_n$ por $v_n$, entonces
+se tiene que $\|f(T)\| \leq \|f\|_\infty$. Notar además que esta definición no depende de la base: si $\{v_m\}_{m \geq 1}$ es otra base ortonormal de autovectores, y construimos $\widetilde{f(T)}$ reemplazando cada $e_n$ por $v_n$, entonces
 \begin{align*}
-\widetilde{f(A)}e_n = \sum_{v_m \in E_n}f(\lambda_m)(v_m,e_n)v_m = f(\lambda_n)\sum_{v_m \in E_n}(v_m,e_n)v_m = f(\lambda_n)e_n = f(A)e_n.
+\widetilde{f(T)}e_n = \sum_{v_m \in E_n}f(\lambda_m)(v_m,e_n)v_m = f(\lambda_n)\sum_{v_m \in E_n}(v_m,e_n)v_m = f(\lambda_n)e_n = f(T)e_n.
 \end{align*}
 Como ambos operadores son acotados y coinciden en una base hilbertiana, deben ser iguales.
 \end{definition}
 
 \paintline
-A partir de ahora $H$ denotará un espacio de Hilbert separable. Fijamos también un operador $A$ compacto y autoadjunto y una base hilbertiana $\{e_n\}_{n \geq 1}$ de autovectores de $A$ en el sentido anterior.
+A partir de ahora $H$ denotará un espacio de Hilbert separable. Fijamos también un operador $T$ compacto y autoadjunto y una base hilbertiana $\{e_n\}_{n \geq 1}$ de autovectores de $T$ en el sentido anterior.
 
-Es decir, en vista del $\tpaint{Teorema 2.0.1}$ tomamos una base hilbertiana tal que para cada $n \in \N$ es $Ae_n = \lambda_ne_n$ con $\lambda_n \in \sigma(A)$, y más aún tal que cada autoespacio tenga por base a una subcolección de $\{e_n\}_{n \geq 1}$.
+Es decir, en vista del $\tpaint{Teorema 2.0.1}$ tomamos una base hilbertiana tal que para cada $n \in \N$ es $Te_n = \lambda_ne_n$ con $\lambda_n \in \sigma(T)$, y más aún tal que cada autoespacio tenga por base a una subcolección de $\{e_n\}_{n \geq 1}$.
 \paintline
 
 \begin{theorem} La aplicación
 \begin{align*}
-\ev_A : B(\sigma(A),\R&) \to \mathscr{L}(H)\\
-&f \mapsto \ev_A(f)
+\ev_T : B(\sigma(T),\R&) \to \mathscr{L}(H)\\
+&f \mapsto \ev_T(f)
 \end{align*}
-es un morfismo de álgebras de Banach continuo que satisface $\|ev_A\| \leq 1$. Más aún, se tiene que $\ev_A(\mathsf{1}) = I$ y $\ev_A(\id) = A$. Notaremos $f(A) := \ev_A(f)$.
+es un morfismo de álgebras de Banach continuo que satisface $\|ev_T\| \leq 1$. Más aún, se tiene que $\ev_T(\mathsf{1}) = I$ y $\ev_T(\id) = A$. Notaremos $f(T) := \ev_T(f)$.
 \end{theorem}
-\begin{proof} Al definir $\ev_A(f)$ vimos que se satisface $\|\ev_A(f)\| \leq \|f\|_\infty$. Por otro lado, es
+\begin{proof} Al definir $\ev_T(f)$ vimos que se satisface $\|\ev_T(f)\| \leq \|f\|_\infty$. Por otro lado, es
 \begin{align*}
-\ev_A(\mathsf{1})x = \sum_{n \geq 1}\mathsf{1}(\lambda_n)\ip{e_n,x}e_n = \sum_{n \geq 1}\ip{e_n,x}e_n = x
+\ev_T(\mathsf{1})x = \sum_{n \geq 1}\mathsf{1}(\lambda_n)\ip{e_n,x}e_n = \sum_{n \geq 1}\ip{e_n,x}e_n = x
 \end{align*}
 y 
 \begin{align*}
-\ev_A(\id)x = \sum_{n \geq 1}\id(\lambda_n)\ip{e_n,x}e_n = \sum_{n \geq 1}\lambda_n\ip{e_n,x}e_n = \sum_{n \geq 1}\ip{e_n,\lambda_nx}e_n = \sum_{n \geq 1}\ip{e_n,Ax}e_n = Ax,
+\ev_T(\id)x = \sum_{n \geq 1}\id(\lambda_n)\ip{e_n,x}e_n = \sum_{n \geq 1}\lambda_n\ip{e_n,x}e_n = \sum_{n \geq 1}\ip{e_n,\lambda_nx}e_n = \sum_{n \geq 1}\ip{e_n,Ax}e_n = Tx,
 \end{align*}
-así que $\ev_A(\mathsf{1}) = I$ y $\ev_A(\id) = A$.
+así que $\ev_T(\mathsf{1}) = I$ y $\ev_T(\id) = T$.
 
-La linealidad es consecuencia de la linealidad de las series: si $f,g : \sigma(A) \to \R$ son acotadas y $\mu \in \R$, entonces
+La linealidad es consecuencia de la linealidad de las series: si $f,g : \sigma(T) \to \R$ son acotadas y $\mu \in \R$, entonces
 \begin{align*}
-(f+\mu g)(A)x &= \sum_{n \geq 1}(f+\mu g)(\lambda_n)\ip{e_n,x}e_n = \sum_{n \geq 1}f(\lambda_n)\ip{e_n,x}e_n + \mu\sum_{n \geq 1}g(\lambda_n)\ip{e_n,x}e_n\\
-&= f(A)x + \mu g(A)x = (f(A)+\mu g(A))x.
+(f+\mu g)(T)x &= \sum_{n \geq 1}(f+\mu g)(\lambda_n)\ip{e_n,x}e_n = \sum_{n \geq 1}f(\lambda_n)\ip{e_n,x}e_n + \mu\sum_{n \geq 1}g(\lambda_n)\ip{e_n,x}e_n\\
+&= f(T)x + \mu g(T)x = (f(T)+\mu g(T))x.
 \end{align*}
 
-Por último, veamos que $\ev_A$ es un morfismo de álgebras de Banach: si $f,g : \sigma(A) \to \R$, entonces
+Por último, veamos que $\ev_T$ es un morfismo de álgebras de Banach: si $f,g : \sigma(T) \to \R$, entonces
 \begin{align*}
-f(A)g(A)x &= f(A)\left[\sum_{n \geq 1}g(\lambda_n)(e_n,x)e_n\right] = \sum_{n \geq 1}g(\lambda_n)(e_n,x)[f(A)e_n]\\
-&= \sum_{n \geq 1}f(\lambda_n)g(\lambda_n)(e_n,x)e_n)x = fg(A)x
+f(T)g(T)x &= f(T)\left[\sum_{n \geq 1}g(\lambda_n)(e_n,x)e_n\right] = \sum_{n \geq 1}g(\lambda_n)(e_n,x)[f(T)e_n]\\
+&= \sum_{n \geq 1}f(\lambda_n)g(\lambda_n)(e_n,x)e_n)x = fg(T)x
 \end{align*}
 para todo $x \in H$.
 \end{proof}
 
-\begin{proposition} Si $f : \sigma(A) \to \R$ es una función acotada, entonces
+\begin{proposition} Si $f : \sigma(T) \to \R$ es una función acotada, entonces
 \begin{itemize}
-\item[(i)] $\sigma(f(A)) = f(\sigma(A))$.
-\item[(ii)] $f(A)$ es autoadjunta.
-\item[(iii)] $\|f(A)\| = \|f|_{\sigma(A)}\|_{\infty}$.
-\item[(iv)] Si $f \geq 0$ entonces $f(A) \geq 0$.
+\item[(i)] $\sigma(f(T)) = f(\sigma(T))$.
+\item[(ii)] $f(T)$ es autoadjunta.
+\item[(iii)] $\|f(T)\| = \|f|_{\sigma(T)}\|_{\infty}$.
+\item[(iv)] Si $f \geq 0$ entonces $f(T) \geq 0$.
 \end{itemize}
 \end{proposition}
 \begin{proof} Hacemos cada inciso por separado. 
 \begin{itemize}[listparindent = \parindent]
-\item[(i)] Si $\lambda_j \in \sigma(A)$, es
+\item[(i)] Si $\lambda_j \in \sigma(T)$, es
 \begin{align*}
-f(A)e_j = \sum_{n \geq 1}f(\lambda_n)(e_n,e_j)e_n = f(\lambda_j)e_j,
+f(T)e_j = \sum_{n \geq 1}f(\lambda_n)(e_n,e_j)e_n = f(\lambda_j)e_j,
 \end{align*}
-así que $f(\sigma(A)) \subset \sigma(f(A))$. 
+así que $f(\sigma(T)) \subset \sigma(f(T))$. 
 
-Recíprocamente, tomemos $\lambda \not \in f(\sigma(A))$. Como esto dice que función $g(t) = (f(t)-\lambda)^{-1}$ está bien definida en $\sigma(A)$ y es allí acotada, está bien definida su evaluación $g(A)$ en $A$. Como es $g(f-\lambda) = (f-\lambda)g = \mathsf{1}$, aplicando $\ev_A$ obtenemos que
+Recíprocamente, tomemos $\lambda \not \in f(\sigma(T))$. Como esto dice que función $g(t) = (f(t)-\lambda)^{-1}$ está bien definida en $\sigma(T)$ y es allí acotada, está bien definida su evaluación $g(T)$ en $T$. Como es $g(f-\lambda) = (f-\lambda)g = \mathsf{1}$, aplicando $\ev_T$ obtenemos que
 \begin{align*}
-g(A)(f(A)- \lambda I) = (f(A) - \lambda I)g(A) = I.
+g(T)(f(T)- \lambda I) = (f(T) - \lambda I)g(T) = I.
 \end{align*}
-y en consecuencia $\lambda$ no pertenece al espectro de $f(A)$,
+y en consecuencia $\lambda$ no pertenece al espectro de $f(T)$,
 \item[(ii)] Por un cálculo directo, tomando $x,y \in H$ se tiene que 
 \begin{align*}
-\ip{f(A)x, y} = \sum_{n \geq 1} f(\lambda_n) \ip{e_n, x}\ip{e_n,y}  = \ip{f(A)y,x} = \ip{x, f(A)y}.
+\ip{f(T)x, y} = \sum_{n \geq 1} f(\lambda_n) \ip{e_n, x}\ip{e_n,y}  = \ip{f(T)y,x} = \ip{x, f(T)y}.
 \end{align*}
-\item[(iii)] Como es $\|ev_A\| \leq 1$, ya sabemos que $\|f(A)\| \leq \|f_{\sigma(A)}\|_\infty$. En vista de $\tpaint{(i)}$ tenemos la otra desigualdad, pues acotando inferiormente por los autovectores de norma $1$ se tiene que 
+\item[(iii)] Como es $\|ev_T\| \leq 1$, ya sabemos que $\|f(T)\| \leq \|f_{\sigma(T)}\|_\infty$. En vista de $\tpaint{(i)}$ tenemos la otra desigualdad, pues acotando inferiormente por los autovectores de norma $1$ se tiene que 
 \begin{align*}
-\|f(A)\| = \sup_{\|x\| = 1}\|f(A)(x)\| \geq \sup_{\lambda \in \sigma(f(A))}|\lambda| = \sup_{\lambda \in f(\sigma(A))}|\lambda| = \|f|_{\sigma(A)}\|_\infty.
+\|f(T)\| = \sup_{\|x\| = 1}\|f(T)(x)\| \geq \sup_{\lambda \in \sigma(f(T))}|\lambda| = \sup_{\lambda \in f(\sigma(T))}|\lambda| = \|f|_{\sigma(T)}\|_\infty.
 \end{align*}
-\item[(iv)] Supongamos ahora que $f \geq 0$ y sea $x \in H$. Por definición de $f(A)$ es 
+\item[(iv)] Supongamos ahora que $f \geq 0$ y sea $x \in H$. Por definición de $f(T)$ es 
 \begin{align*}
-(f(A)x,x) = \sum_{n \geq 1} f(\lambda_n) \ip{e_n, x}^2 \geq 0
+(f(T)x,x) = \sum_{n \geq 1} f(\lambda_n) \ip{e_n, x}^2 \geq 0
 \end{align*}
 pues por hipótesis sabemos que $f(\lambda_n) \geq 0$ para todo $n \geq 1$.
 \end{itemize}
 \end{proof}
 
-\begin{remark} Lo anteriores resultados también valen cuando $f$ está definida en un dominio que contiene al espectro (mientras esté acotada allí) precomoponiendo $\ev_A$ con la restricción de $f$ al $\sigma(A)$. Más aún, el operador $f(A)$ sólo depende de los valores que $f$ toma en su espectro. En particular, esto nos dice que podemos definir $f(A)$ para $f : \R \to \R$ continua o medible Borel. 
+\begin{remark} Lo anteriores resultados también valen cuando $f$ está definida en un dominio que contiene al espectro (mientras esté acotada allí) precomoponiendo $\ev_T$ con la restricción de $f$ al $\sigma(T)$. Más aún, el operador $f(T)$ sólo depende de los valores que $f$ toma en su espectro. En particular, esto nos dice que podemos definir $f(T)$ para $f : \R \to \R$ continua o medible Borel. 
 
-Más aún, la aplicación $ev_A : \mathcal{C}(\R) \to \mathscr{L}(H)$ es el único morfismo de álgebras de Banach continuo que tiene a $I$ por imagen de $\mathsf{1}$ y $A$ por imagen de $\id$.
+Más aún, la aplicación $ev_T : \mathcal{C}(\R) \to \mathscr{L}(H)$ es el único morfismo de álgebras de Banach continuo que tiene a $I$ por imagen de $\mathsf{1}$ y $T$ por imagen de $\id$.
 \end{remark}
 
 \begin{proposition} Si $f : \R \to \R$ es una función continua, entonces existe un operador compacto $S \in \mathscr{K}(H)$ tal que
 \begin{align*}
-f(A) = S + f(0)I.
+f(T) = S + f(0)I.
 \end{align*}
 \end{proposition}
 \begin{proof} Por el teorema de Stone-Weierstraß, sabemos que existe una sucesión de polinomios $(p_n)_{n \geq 1}$ tal que $p_n \to f$ uniformemente y en particular, es $p_n(0) \to f(0)$. Ahora, para cada $n \in \N$ definimos
 \begin{align*}
 q_n = p_n - p_n(0),
 \end{align*} 
-y en vista de la observación anterior, se tiene que $q_n \to f - f(0)$. Aplicando $ev_A$ y usando que ésta es continua, es
+y en vista de la observación anterior, se tiene que $q_n \to f - f(0)$. Aplicando $ev_T$ y usando que ésta es continua, es
 \begin{align}
-q_n(A) \to (f-f(0))(A) = f(A) - f(0)I.
+q_n(T) \to (f-f(0))(T) = f(T) - f(0)I.
 \end{align}
 
-Fijemos ahora $n \in \N$. Como $q_n(0) = p_n(0) - p_n(0) = 0$, existe $r \in \R[X]$ tal que $q_n = Xr$. Por lo tanto, obtenemos $q_n(A) = (Xr)(A) = ev_A(X) \circ ev_A(r) = A \circ r(A)$. Al ser $A$ un operador compacto, el operador $q_n(A)$ es compacto para cada $n \in \N$. En vista de $\tpaint{(2.1)}$, obtenemos finalmente que el operador $f(A) - f(0)I$ es compacto. Resta notar entonces que
+Fijemos ahora $n \in \N$. Como $q_n(0) = p_n(0) - p_n(0) = 0$, existe $r \in \R[X]$ tal que $q_n = Xr$. Por lo tanto, obtenemos $q_n(T) = (Xr)(T) = ev_T(X) \circ ev_T(r) = T \circ r(T)$. Al ser $A$ un operador compacto, el operador $q_n(T)$ es compacto para cada $n \in \N$. En vista de $\tpaint{(2.1)}$, obtenemos finalmente que el operador $f(T) - f(0)I$ es compacto. Resta notar entonces que
 \begin{align*}
-f(A) = (f(A)-f(0)I) + f(0)I.
+f(T) = (f(T)-f(0)I) + f(0)I.
 \end{align*}  
 \end{proof}
 
-\begin{corollary} Si $f : \R \to \R$ es una función continua que se anula en $0$, el operador $f(A)$ resulta compacto. $\square$
+\begin{corollary} Si $f : \R \to \R$ es una función continua que se anula en $0$, el operador $f(T)$ resulta compacto. $\square$
 \end{corollary}
 
-\begin{remark} Aún cuando $f(A)$ no es compacto, la $\tpaint{Proposición }2.0.2$ nos dá información a través de la Alternativa de Fredholm. Por ejemplo, sabemos que el núcleo de la evaluación siempre es de dimensión finita.
+\begin{remark} Aún cuando $f(T)$ no es compacto, la $\tpaint{Proposición }2.0.2$ nos dá información a través de la Alternativa de Fredholm. Por ejemplo, sabemos que el núcleo de la evaluación siempre es de dimensión finita.
 \end{remark}
 
-\begin{proposition} Si $f,g \in C(\R,\R)$ son dos funciones continuas, entonces $(f \circ g)(A) = f(g(A))$.
+\begin{proposition} Si $f,g \in C(\R,\R)$ son dos funciones continuas, entonces $(f \circ g)(T) = f(g(T))$.
 \end{proposition}
-\begin{proof} En efecto, fijando una base ortonormal $\{e_n\}_{n \geq 1}$ de autovectores con $Ae_n = \lambda_ne_n$, ésta resulta una base ortonormal de autovectores de $g(A)$ con $g(A)e_n = g(\lambda_n)e_n$. Por lo tanto, para cada $x \in H$ es
+\begin{proof} En efecto, la base ortonormal $\{e_n\}_{n \geq 1}$ de autovectores resulta una base ortonormal de autovectores de $g(T)$ con $g(T)e_n = g(\lambda_n)e_n$. Por lo tanto, para cada $x \in H$ es
 \begin{align*}
-f(g(A))x = \sum_{n \geq 1}f(g(\lambda_n))(e_n,x)e_n = \sum_{n \geq 1}(f \circ g)(\lambda_n)(e_n,x)e_n = (f \circ g)(A).
+f(g(T))x = \sum_{n \geq 1}f(g(\lambda_n))(e_n,x)e_n = \sum_{n \geq 1}(f \circ g)(\lambda_n)(e_n,x)e_n = (f \circ g)(T).
 \end{align*}
 \end{proof}
 
 \subsection{Aplicaciones}
 
-En primer lugar, veamos que todo operador $A$ compacto y autoadjunto \text{« tiene una raíz enésima »}. Esto es, para cada $n \in \N$ existe un operador $B$ tal que $B^n = A$.
+En primer lugar, veamos que todo operador $T$ compacto y autoadjunto \text{«tiene una raíz enésima»}. Esto es, para cada $n \in \N$ existe un operador $S$ tal que $S^n = T$.
 
-\begin{theorem}  Sea $H$ un espacio de Hilbert y $A \in \mathscr{L}(H)$ un operador compacto y autoadjunto. Dado $n \in \N$, se tiene que 
+\begin{theorem}  Sea $H$ un espacio de Hilbert y $T \in \mathscr{L}(H)$ un operador compacto y autoadjunto. Dado $n \in \N$, se tiene que 
 \begin{itemize}
-\item[(i)] Si $n$ es impar, existe un único operador $B \in \mathscr{L}(H)$ tal que $B^n = A$.
-\item[(ii)] Si $n$ es par, existe un operador positivo $B \in \mathscr{L}(H)$ tal que $B^n = A$ sí y solo si $A \geq 0$. En tal caso existe un único operador $B$ positivo con esta propiedad.
+\item[(i)] Si $n$ es impar, existe un único operador $S \in \mathscr{L}(H)$ tal que $S^n = T$.
+\item[(ii)] Si $n$ es par, existe un operador positivo $S \in \mathscr{L}(H)$ tal que $S^n = T$ sí y solo si $T \geq 0$. En tal caso existe un único operador $S$ positivo con esta propiedad.
 \end{itemize}
-Notaremos $A^{1/n} := B$ en ambos casos a este operador, que de existir resulta siempre compacto.
+Notaremos $A^{1/n} := S$ en ambos casos a este operador, que de existir resulta siempre compacto.
 \end{theorem}
-\begin{proof} Para cada $n \geq 1$, definimos $f :t \in \sigma(A) \mapsto t^{1/n} \in \R$.
+\begin{proof} Para cada $n \geq 1$, definimos (cuando sea posible) $f :t \in \sigma(T) \mapsto t^{1/n} \in \R$.
 \begin{itemize}[listparindent = \parindent] 
-\item[(i)] Sea $B = f_n(A)$. Por definición, es $B^n = f_n(A) \circ \cdots \circ f_n(A) = f_n^n(A) = id(A) = A$. Además, si $B'$ es tal que $B'^n = A$, entonces
+\item[(i)] Sea $S = f_n(A)$. Por definición, es $S^n = f_n(T) \circ \cdots \circ f_n(T) = f_n^n(T) = id(T) = T$. Además, si $S'$ es tal que $S'^n = T$, entonces
 \begin{align*}
-B' = id(B') = (f_n^n \circ (t \mapsto t^n))(B') = f_n^n(B'^n) = f_n^n(A) = B.
+S' = id(S') = (f_n^n \circ (t \mapsto t^n))(S') = f_n^n(S'^n) = f_n^n(T) = S.
 \end{align*}
-\item[(ii)] Recordemos que como $A$ es autoadjunta, es $\inf \sigma(A) = \inf_{\|x\| = 1} (Ax,x)$ y por lo tanto tenemos que $A \geq 0$ si y sólo si $\sigma(A) \subset [0,+\infty)$. 
-Esto nos permite hacer la misma construcción que antes para este caso, y como ahora es $f_n \geq 0$, de aquí se concluye que $A^{1/n} \geq 0$. Para la unicidad resta notar que si $B' \geq 0$, entonces $B' = |B'| = \sqrt{1/n}{B'^n} = A^{1/n}.$
+\item[(ii)] Recordemos que como $T$ es autoadjunta, es $\inf \sigma(T) = \inf_{\|x\| = 1} (Tx,x)$ y por lo tanto tenemos que $T \geq 0$ si y sólo si $\sigma(T) \subset [0,+\infty)$. 
+Esto nos permite hacer la misma construcción que antes para este caso, y como ahora es $f_n \geq 0$, de aquí se concluye que $T^{1/n} \geq 0$. Para la unicidad resta notar que si $S' \geq 0$ es otra raíz $n$-ésima, entonces $S' = |S'| = \sqrt{1/n}{S'^n} = T^{1/n}$.
 \end{itemize}
 
-Finalmente, como para todo $n \geq 1$ es $f_n(0) = 0$, sabemos que $A^{1/n}$ siempre resulta compacto.
+Finalmente, como para todo $n \geq 1$ es $f_n(0) = 0$, sabemos que $T^{1/n}$ siempre resulta compacto.
 \end{proof}
 
 \paintline
 
-La siguiente aplicación es una adaptación del $\tpaint{Teorema 12.44}$ de $\cite{Rudin}$, que es una versión del teorema ergódico de Von Neumann para transformaciones unitarias,
+La siguiente aplicación es una adaptación del $\tpaint{Teorema 12.44}$ de $\cite{Rudin}$, que es una versión del teorema ergódico medio de Von Neumann para transformaciones unitarias,
 
 \begin{tcolorbox}
-\begin{theorem*} Si $H$ es un espacio de Hilbert y $B \in \mathscr{U}(H)$ una transformación unitaria, entonces para cada $x \in H$ los \textit{promedios} $\frac{1}{n}(x + Bx + \dots + B^{n-1}x)$ convergen puntualmente a un elemento $y \in H$.
+\begin{theorem*} Si $H$ es un espacio de Hilbert y $U \in \mathscr{L}(H)$ una transformación unitaria, entonces para cada $x \in H$ los \textit{promedios} $\frac{1}{n}(x + Ux + \dots + U^{n-1}x)$ convergen puntualmente a un elemento $y \in H$.
 \end{theorem*}
 \end{tcolorbox}
 La demostración presente en $\cite{Rudin}$ hace uso del teorema espectral en un caso más general. Usando que los autovalores de una transformación unitaria yacen en el círculo de radio $1$, el teorema se reduce a un cálculo directo de convergencia puntual para una cierta sucesión de funciones.
 
-Siguiendo la idea de esta demostración pero en el caso de operadores compactos y autoadjuntos, definimos a continuación el concepto de medida espectral y con esto probamos que un resultado auxiliar de convergencia. 
+Siguiendo la idea de esta demostración pero en el caso de operadores compactos y autoadjuntos, definimos a continuación el concepto de medida espectral y con esto probamos un resultado auxiliar de convergencia. 
 
-Concluimos con el $\tpaint{Teorema 2.0.4}$, el cual afirma que si $A$ es un operador compacto, autoadjunto y de norma $1$, entonces sus promedios convergen puntualmente a la proyección ortogonal del subespacio de sus puntos fijos.
+Concluimos con el $\tpaint{Teorema 2.0.4}$, el cual afirma que si $T$ es un operador compacto, autoadjunto y de norma $1$, entonces sus promedios convergen puntualmente a la proyección ortogonal del subespacio de sus puntos fijos.
 \\
 \begin{tcolorbox}
 \begin{theorem*}[\textbf{Riesz-Markov-Kakutani}] Sea $X$ un espacio topológico Hausdorff y localmente compacto. Si $\psi : C(X) \to \R$ es un funcional lineal positivo, existe una única medida Borel regular $\mu$ en $X$ tal que
@@ -442,44 +605,44 @@ para toda $f \in C(X)$.
 \end{theorem*}
 \end{tcolorbox}
 
-\begin{definition} Sea $H$ un espacio de Hilbert y $A : H \to H$ un operador compacto y autoadjunto. Para cada $h \in H$, la aplicación 
+\begin{definition} Sea $H$ un espacio de Hilbert y $T : H \to H$ un operador compacto y autoadjunto. Para cada $h \in H$, la aplicación 
 \begin{align*}
-f \in C(\sigma(A)) \mapsto \ip{f(A)h,h} \in \R
+f \in C(\sigma(T)) \mapsto \ip{f(T)h,h} \in \R
 \end{align*}
-resulta un funcional lineal positivo. El teorema de Riesz-Markov-Kakutani nos asegura entonces que existe una única medida Borel regular $\mu_h$ en $\sigma(A)$ que satisface
+resulta un funcional lineal positivo. El teorema de Riesz-Markov-Kakutani nos asegura entonces que existe una única medida Borel regular $\mu_h$ en $\sigma(T)$ que satisface
 \begin{align*}
-\ip{f(A)h,h} = \int_{\sigma(A)} f d\mu_h
+\ip{f(T)h,h} = \int_{\sigma(T)} f d\mu_h
 \end{align*}
-para toda $f : \sigma(A) \to \R$ continua. Llamamos a $\mu_h$ la \textbf{medida espectral de $A$ asociada a $h$}.
+para toda $f : \sigma(T) \to \R$ continua. Llamamos a $\mu_h$ la \textbf{medida espectral de $T$ asociada a $h$}.
 \end{definition}
 
 \begin{proposition}
-Sea $H$ un espacio de Hilbert separable y $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Si $(g_n)_{n \geq 1} \subset \mathcal{C}(\sigma(A),\R)$ es una sucesión uniformemente acotada que converge puntualmente a cierta función $g : \sigma(A) \to \R$, la sucesión de operadores $\{g_n(A)\}_{n \geq 1} \subset \mathscr{L}(H)$ \textbf{sot}-converge a $g(A)$.
+Sea $H$ un espacio de Hilbert separable y $T \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Si $(g_n)_{n \geq 1} \subset \mathcal{C}(\sigma(T),\R)$ es una sucesión uniformemente acotada que converge puntualmente a cierta función $g : \sigma(T) \to \R$, la sucesión de operadores $\{g_n(T)\}_{n \geq 1} \subset \mathscr{L}(H)$ \textbf{sot}-converge a $g(T)$.
 \end{proposition}
 \begin{proof} Observemos que por el teorema de convergencia dominada, para cada $h \in H$ es
 \begin{align*}
-(g_n(A)h,h) = \int_{\sigma(A)}g_n d\mu_h \to \int_{\sigma(A)}g d\mu_h = (g(A)h,h).
+(g_n(T)h,h) = \int_{\sigma(T)}g_n d\mu_h \to \int_{\sigma(T)}g d\mu_h = (g(T)h,h).
 \end{align*}
-Usando la identidad de polarización, vemos que $(g_n(A)x,y) \to (g(A)x,y)$ para todo $x,y \in H$. Por lo tanto tenemos convergencia débil,
+Usando la identidad de polarización, vemos que $(g_n(T)x,y) \to (g(T)x,y)$ para todo $x,y \in H$. Por lo tanto tenemos convergencia débil,
 \begin{align*}
-g_n(A)x \rightharpoonup g(A)x
+g_n(T)x \rightharpoonup g(T)x
 \end{align*}
-para cada $x \in H$. Para terminar alcanza ver que siempre es $\|g_n(A)x\| \to \|g(A)x\|$.
+para cada $x \in H$. Para terminar alcanza ver que siempre es $\|g_n(T)x\| \to \|g(T)x\|$.
 
 Por hipótesis sabemos que las funciones $(g_n^2)_{n \geq 1}$ también están uniformemente acotadas y $g_n^2 \to g^2$ puntualmente. Por lo tanto, el argumento anterior nos dice que para cada $x \in H$ es
 \begin{align*}
-\|g_n(A)x\|^2 = \ip{g_n(A)x,g_n(A)x} = \ip{g_n(A)g_n(A)x,x} = \ip{g_n^2(A)x,x} \to \ip{g^2(A)x,x} = \|g(A)x\|^2. 
+\|g_n(T)x\|^2 = \ip{g_n(T)x,g_n(T)x} = \ip{g_n(T)g_n(T)x,x} = \ip{g_n^2(T)x,x} \to \ip{g^2(T)x,x} = \|g(T)x\|^2. 
 \end{align*}
-y tomando raíces vemos que $\|g_n(A)x\| \to \|g(A)x\|$.
+y tomando raíces vemos que $\|g_n(T)x\| \to \|g(T)x\|$.
 \end{proof}
 
-\begin{theorem}[un caso particular del teorema ergódico de Von Neumann] Sea $H$ un espacio de Hilbert separable. Si $A \in \mathscr{K}(H)$ un operador compacto y autoadjunto tal que $\|A\| = 1$, entonces los promedios de $A$ \textbf{sot}-convergen al proyector $\pi_A$ del subsepacio de puntos fijos de $A$. Es decir, si notamos $E_1 = \{x \in H : Ax = x\}$ y $\pi_A := P_{E_1}$, entonces
+\begin{theorem}[un caso particular del teorema ergódico medio de Von Neumann] Sea $H$ un espacio de Hilbert separable. Si $T \in \mathscr{K}(H)$ un operador compacto y autoadjunto tal que $\|T\| \leq 1$, entonces los promedios de $T$ \textbf{sot}-convergen al proyector $\pi_T$ del subsepacio de puntos fijos de $T$. Es decir, si notamos $E_1 = \{x \in H : Tx = x\}$ y $\pi_T := P_{E_1}$, entonces
 \begin{align*}
-\frac{1}{n}\sum_{i=1}^{n}A^ix \ \xrightarrow{n \to \infty} \ \pi_Ax.
+\frac{1}{n}\sum_{i=1}^{n}T^ix \ \xrightarrow{n \to \infty} \ \pi_Tx.
 \end{align*}
 para todo $x \in H$.
 \end{theorem}
-\begin{proof} Notemos en primer lugar que $\sigma(A) \subset [-\|A\|,\|A\|] = [-1,1]$. Para cada $n \in \N$, definimos $g_n(x) := \frac{1}{n}\sum_{i=1}^nx^i$ para cada $x \in [-1,1]$. Tenemos así que $\frac{1}{n}\sum_{i=1}^{n}A^i = g_n(A)$. Por otro lado, la proyección $\pi_A$ coincide con la evaluación en $A$ de 
+\begin{proof} Notemos en primer lugar que $\sigma(T) \subset [-\|T\|,\|T\|] \subset [-1,1]$. Para cada $n \in \N$, definimos $g_n(x) := \frac{1}{n}\sum_{i=1}^nx^i$ para cada $x \in [-1,1]$. Tenemos así que $\frac{1}{n}\sum_{i=1}^{n}T^i = g_n(T)$. Por otro lado, la proyección $\pi_T$ coincide con la evaluación en $T$ de 
 \begin{align*}
 g(x) := \begin{cases}
 1 &\text{si $x = 1$}\\
@@ -498,6 +661,7 @@ Ahora veamos la convergencia puntual. En primer lugar, la sucesión $(g_n(1))_{n
 \end{align*}
 Consecuentemente, debe ser $g_n(\lambda) \to 0 = g(\lambda)$.
 \end{proof}
+
 \begin{thebibliography}{}
 \bibitem{Brezis} H. Brezis. \textit{Functional Analysis, Sobolev Spaces and Partial Differential Equations}. Springer, 2010.
 \bibitem{ReedSimon} M. Reed, B. Simon. \textit{Methods of Modern Mathematical Physics}.  Academic Press Inc., 1980.
