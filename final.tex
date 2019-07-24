@@ -88,15 +88,6 @@ $\paint{
 Recuerdo primero algunos resultados que vimos en la materia y serán necesarios para la demostración del teorema espectral.
 \subsection{Proyectores, Teoremas de Representación y Sumas Hilbertianas}
 
-\begin{proposition} Sea $H$ un espacio de hilbert y $S \leq H$ un subespacio. 
-\begin{itemize}
-\item[(i)] $S^\perp$ es cerrado.
-\item[(i)] $S^{\perp\perp} = \overline{S}$.
-\item[(iii)] $S^\perp = H$ si y sólo si $S = \{0\}$.
-\item[(iv)] $S$ es denso si y sólo si $S^\perp = H$
-\end{itemize}
-\end{proposition}
-
 \begin{theorem}[de la proyección ortogonal] Sea $H$ un espacio de Hilbert y $K \subset H$ un subcojunto convexo, cerrado y no vacío. Dado $f \in H$, existe un único $u \in K$ tal que
 \begin{align*}
 \|f-u\| = \min_{v \in K}\|f-v\|.
@@ -110,14 +101,51 @@ u \in K\\
 \end{align*}
 Notamos $P_Kf := u$.
 \end{theorem}
-\begin{proof}
-content...
+\begin{proof} Sea $\{v_n\}_{n \geq 1} \subset K$ una sucesión que realiza $d := \inf_{v \in K}\|f-v\|$ de forma decreciente y veamos que $\{v_n\}_{n \geq 1}$ es de Cauchy. Notemos $d_n := \|f-v_n\|$ para cada $n \in \N$. Usando la identidad del paralelogramo, es
+\begin{align}
+\left\|f-\frac{v_n+v_m}{2}\right\|^2 + \left\|\frac{v_n-v_m}{2}\right\|^2 = \frac{d_n^2 + d_m^2}{2}
+\end{align}
+para cada $n,m \in \N$. Como $K$ es convexo, sabemos que $1/2(v_n+v_m) \in K$ y por lo tanto  es $\|f-\frac{v_n+v_m}{2}\|^2 \geq d^2$. De $\tpaint{(1.1)}$ tenemos así 
+\begin{align*}
+\|v_n-v_m\|^2 \leq 4\left(\frac{d_n^2+d_m^2}{2}-d^2\right),
+\end{align*}
+lo que efectivamente muestra que $\{v_n\}_{n \geq 1}$ es de Cauchy. Existe entonces un cierto límite $u \in K$ que realiza $d(f,K)$. 
+
+Sea ahora $v \in K$ y $v_t = tv + (1-t)u$. Como $\varphi(t) = \|f-v_t\|^2$ se minimiza en $0$, es $0  \leq \varphi'(0) = -2(f-u,v-u)$ y entonces $(f-u,v-u) \leq 0$. Recíprocamente, si $u \in K$ es tal que $(f-u, v-u) \leq 0$ para todo $v \in K$ entonces 
+\begin{align}
+\|f-u\|^2 -\|f-v\|^2 = 2(f-u,v-u) \leq 0
+\end{align}
+lo que dice que $u$ realiza $d(f,K)$.
+
+De esta caracterización vemos la unicidad: si $u$ y $u'$ minimizan $d(f,K)$ es entonces
+\begin{align*}
+\|u-u'\|^2 = \ip{u-f,u-u'} + \ip{f-u',u-u'} = \ip{f-u,u'-u} + \ip{f-u',u-u'} \leq 0,
+\end{align*}
+lo que muestra que $u = u'$.
+\end{proof}
+
+\begin{corollary} Sea $H$ un espacio de Hilbert y $K \subset H$ un convexo cerrado no vacío. Entonces $P_K$ es continua y $\|P_Kf_1 - P_Kf_2\| \leq \|f_1 - f_2\|$.
+\end{corollary}
+\begin{proof} Sea $u_i = P_Mf_i$. Como es $(f_i - u_i,v-u_i) \leq 0$ para todo $v \in K$, tenemos que
+\[
+(f_2-f_1,u_1-u_2) + \|u_1-u_2\|^2 \leq 0.
+\]
+Ahora, por la desigualdad de Cauchy-Schwartz es
+\[
+\|u_1-u_2\|^2 \leq \ip{f_1-f_2,u_1-u_2} \leq \|f_1-f_2\|\|u_1-u_2\|,
+\]
+de forma que $\|P_Kf_1-P_Kf_2\| = \|u_1-u_2\| \leq \|f_1-f_2\|$.
 \end{proof}
 
 \begin{corollary} Sea $H$ un espacio de Hilbert y $M \leq H$ un subespacio cerrado. La aplicación $f \in H \mapsto P_Mf \in H$ es un operador continuo. Más aún, $P_M$ es un proyector y para cada $f \in H$ el vector $P_Mf$ se caracteriza como el único tal que $\ip{f-u,v} = 0$ para todo $v \in M$.
 \end{corollary}
-\begin{proof}
-content...
+\begin{proof} La linealidad es consecuencia de la caracterización de $P_Mf$ que probamos a continuación, mismo el hecho de que $P_M$ es un proyector. La suficiencia está dada por el $\tpaint{Teorema 1.0.1}$, así que veremos la necesidad. 
+
+Como para cada $v \in M$ es $P_Mf \pm v \in M$, tenemos que
+\begin{align*}
+0 \geq (f-P_Mf, (P_Mf \pm v) - P_Mf) = \pm(f-P_Mf,v)
+\end{align*}
+y por lo tanto $(f-P_Mf,v) = 0$. 
 \end{proof}
 
 \begin{theorem}[de representación de Riesz] Sea $H$ un espacio de Hilbert. Sin $\varphi \in H^*$ es un funcional lineal, existe un único $u \in H$ tal que
@@ -126,8 +154,34 @@ content...
 \end{align*}
 para todo $v \in H$.
 \end{theorem}
-\begin{proof}
-content...
+\begin{proof} Basta ver que $j : v \in H \mapsto \ip{v,-} \in H^*$ tiene imagen densa. Sea $\Phi : H^* \to \R$ un funcional que se anula en $j(H)$. Como $H$ es reflexivo, sabemos que $\Phi = \ev_{x}$ para cierto $x \in H$ y por lo tanto es
+\begin{align*}
+0 = \Phi(j(y)) = j(y)(x) = \ip{y,x}
+\end{align*}
+para todo $y \in H$. En consecuencia debe ser $x = 0$ y $\Phi \equiv 0$.
+\end{proof}
+
+\begin{proposition} Sea $H$ un espacio de hilbert y $S \leq H$ un subespacio. 
+\begin{itemize}
+\item[(i)] $S^\perp$ es cerrado.
+\item[(i)] $S^{\perp\perp} = \overline{S}$.
+\item[(iii)] $S^\perp = H$ si y sólo si $S = \{0\}$.
+\item[(iv)] $S$ es denso si y sólo si $S^\perp = \{0\}$
+\end{itemize}
+\end{proposition}
+\begin{proof} Hacemos cada inciso por separado.
+\begin{itemize}[listparindent = \parindent]
+\item[(i)] Sea $\{x_n\}_{n \geq 1} \subset S^\perp$ tal que $x_n \to x$. Como para cada $y \in S$ es 
+\[
+\ip{x,y} = \ip{\lim_{n \to \infty}x_n,y} = \lim_{n \to \infty}\ip{x_n,y} = 0,
+\]
+debe ser $x \in S^\perp$. Por lo tanto, el ortogonal de $S$ es cerrado.
+\item[(ii)] Basta ver que $S$ es denso en $S^{\perp\perp}$. Sea $\varphi : S^{\perp \perp} \to \R$ es un funcional que se anula en $S$. Por el teorema de representación de Riesz, es $\varphi \equiv \ip{u,-}$ para cierto $u \in H$. Como además $\varphi$ se anula en $S$, sabemos que $u \in S^\perp$ y por lo tanto $\varphi \equiv 0$. 
+\item[(iii)] En efecto, $S^\perp = H$ si y sólo si para todo $h \in H$ y $s \in S$ es
+\[ (s,h) = 0, \]
+lo que equivale a decir $s = 0$ para todo $s \in S$.
+\item[(iv)] Resta notar que $S$ es denso si y sólo si $S^{\perp \perp} = \overline{S} = H$, y por $\tpaint{(iii)}$ esto ocurre si y sólo si $S^\perp = \{0\}$.
+\end{itemize}
 \end{proof}
 
 \begin{definition} Sea $H$ un espacio de Hilbert y $\mathfrak{a} : H \times H \to \R$ una función bilineal. Decimos que $\mathfrak{a}$ es
@@ -155,6 +209,12 @@ u \in K\\
 content...
 \end{proof}
 
+\begin{theorem}[Lax-Milgram]
+\end{theorem}
+\begin{proof}
+content...
+\end{proof}
+
 \begin{definition} Sea $H$ un espacio de Hilbert y $(E_n)_{n \geq 1}$ una sucesión de subespacios cerrados de $H$. Se dice que $H$ es \textbf{suma hilbertiana} de $(E_n)_{n \geq 1}$ si 
 \begin{itemize}
 \item[$\paint{\bullet}$] $E_i \perp E_j$ si $i \neq j$, y
@@ -171,6 +231,40 @@ Notamos $H = \bigoplus_{n = 1}^\infty E_n$.
 
 Recíprocamente, si tomamos $u_n \in E_n$ para cada $n \in \N$ y es $\sum_{n \geq 1}\|u_n\|^2 < \infty$, entonces $u := \sum_{n \geq 1}u_n$ converge y se tiene que $u_n = P_{E_n}u$ para cada $n \in \N$.
 \end{theorem}
+\begin{proof} Para cada $k \in \N$, definimos $S_k := \sum_{n=1}^k P_{E_n} \in \mathscr{L}(H)$. Por ortogonalidad se tiene que
+\begin{align*}
+\|S_ku\|^2 = \sum_{n=1}^k\|u_n\|^2 = \sum_{n=1}^k(u,u_n) = (u,S_ku).
+\end{align*}
+pues definición de proyector $P_{E_n}$, es $(u_n,u_n-u) = 0$ y por tanto $\|u_n\|^2 = \ip{u,u_n}$. Usando la desigualdad de Cauchy-Schwartz obtenemos
+\begin{align*}
+\|S_ku\|^2 \leq \|u\|\|S_ku\|,
+\end{align*}
+por lo que debe ser $\|S_k\| \leq 1$.
+
+Ahora, fijemos $\eps > 0$. Por densidad existe $u_\eps \in \operatorname{gen}\ \{E_n\}_{n \geq 1}$ tal que $\|u-u_\eps\|< \eps$ y $k_0 \in \N$ tal que $S_ku_\eps = u_\eps$ si $k > k_0$. Por lo tanto, para todo $k > k_0$ es
+\begin{align*}
+\|S_ku-u_\eps\| = \|S_k(u-u_\eps)\| \leq \|u-u_\eps\| < \eps 
+\end{align*}
+y
+\begin{align*}
+\|S_ku-u\| \leq \|S_ku-u_\eps\| + \|u_\eps - u\| < 2\eps.
+\end{align*}
+
+En otras palabras, vemos que $\sum_{n \geq 1}u_n = \lim_{n \to \infty} S_ku = u$. De aquí es también que
+\begin{align*}
+\|u\|^2 = \|\lim_{n \to \infty}S_ku\|^2 = \lim_{n \to \infty}\|S_ku\|^2 = \sum_{n \geq 1}\|u_n\|^2.
+\end{align*}
+
+Para terminar veamos el recíproco. Si tomamos $u_n \in E_n$ para cada $n \in \N$ tales que $\sum_{n \geq 1}\|u_n\|^2 < \infty$, entonces notando $s_k = \sum_{n=1}^ku_n$ por ortogonalidad vemos que
+\begin{align*}
+\|s_k-l\|^2 \leq \sum_{l < n \leq k}\|u_n\|^2.
+\end{align*}
+Esto dice que $(s_k)_{k \geq 1}$ es de Cauchy, y en consecuencia $\lim_{k \to \infty}s_k = \sum_{n \geq 1}u_n$ existe. Por último, resta notar que por la continuidad de los proyectores es
+\begin{align*}
+P_{E_m}(u) = \sum_{n \geq 1}P_{E_m}(u_n) = u_m
+\end{align*} 
+para todo $m \in \N$.
+\end{proof}
 
 \begin{definition} Sea $H$ un espacio de Hilbert. Una sucesión $\{e_n\}_{n \geq 1}$ se dice una $\textbf{base hilbertiana}$ si
 \begin{itemize}
@@ -181,10 +275,11 @@ Recíprocamente, si tomamos $u_n \in E_n$ para cada $n \in \N$ y es $\sum_{n \ge
 
 \begin{corollary} Sea $H$ un espacio de Hilbert. Si $\{e_n\}_{n \geq 1} \subset H$ es una sucesión ortonormal, entonces esta es una base hilbertiana si y sólo si 
 \begin{align*}
-u = \sum_{n \geq 1}(u,e_n)e_n \text{ y } \|u\|^2 = \sum_{n \geq 1}\|(u,e_n)\|^2.
+u = \sum_{n \geq 1}(u,e_n)e_n \text{ y } \|u\|^2 = \sum_{n \geq 1}|(u,e_n)|^2.
 \end{align*}
+para todo $u \in H$.
 
-Recíprocamente, si $(\alpha_n)_{n \geq 1} \subset \ell^2$ entonces la serie $\sum_{n \geq 1}\alpha_n e_n$ converge en $H$ a un elemento, y su norma es exactamente $\sum_{n \geq 1}\alpha_n^2$. $\square$.
+Recíprocamente, si $(\alpha_n)_{n \geq 1} \subset \ell^2$ entonces la serie $\sum_{n \geq 1}\alpha_n e_n$ converge en $H$ a un elemento, y su norma es exactamente $\sum_{n \geq 1}\alpha_n^2$. \qed
 \end{corollary}
 
 \begin{remark} Si $H$ admite una base Hilbertiana $\{e_n\}_{n \geq 1}$, la aplicación $u \in H \mapsto \{(u,e_n)\}_{n \geq 1} \in \ell^2$ es un isomorfismo isométrico.
@@ -192,8 +287,12 @@ Recíprocamente, si $(\alpha_n)_{n \geq 1} \subset \ell^2$ entonces la serie $\s
 
 \begin{theorem} Un espacio de Hilbert separable de dimensión infinita admite una base hilbertiana.
 \end{theorem}
-\begin{proof}
-content...
+\begin{proof} Sea $\{v_n\}_{n \geq 1} \subset H$ denso y $F_k = \langle v_1, \dots, v_k \rangle$ para cada $k \in \N$. Por lo tanto, es
+\begin{align*}
+\overline{\bigcup_{k \geq 1}F_k} = H.
+\end{align*}
+
+Para cada $k \geq 1$, podemos tomar una base ortonormal $B_{k+1}$ de $F_{k+1}$ que extienda una base ortonormal de $F_k$. Tomando $B = \bigcup_{k \geq 1}B_k$ obtenemos así una base hilbertiana de $H$.
 \end{proof}
 
 \subsection{Operadores Compactos}
@@ -394,7 +493,7 @@ Si $\|x\| \neq 0$, tomando $\alpha = \|y\|/\|x\|$ es $|\ip{Tx,y}| \leq \mu \|x\|
 \end{align*}
 \end{proof}
 
-\begin{corollary} Sea $H$ un espacio de Hilbert y $T \in \mathscr{L}(H)$ un operador autoadjunto. Si $\sigma(T) = \{0\}$, es $T = 0$. $\square$
+\begin{corollary} Sea $H$ un espacio de Hilbert y $T \in \mathscr{L}(H)$ un operador autoadjunto. Si $\sigma(T) = \{0\}$, es $T = 0$. \qed
 \end{corollary}
 
 \chapter{El teorema espectral, cálculo funcional continuo y aplicaciones}
@@ -428,27 +527,21 @@ Para terminar, notemos que para cada $n \in F$ el subespacio $E_n$ es de dimensi
 
 Extendiendo la noción de \textit{«polinomios evaluados en una matriz»}, el teorema espectral nos permitira darle sentido a la expresión $f(T)$ para un operador compacto y autoadjunto $T$ y cierta clase de funciones $f$. Concretamente, 
 
-\begin{definition} Sea $H$ un espacio de Hilbert separable y $T \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Tenemos entonces una base ortonormal de autovectores $\{e_n\}_{n \geq 1}$ de $T$ con $Te_n = \lambda_ne_n$ y $\lambda_n \in \sigma(T)$. 
+\begin{definition} Sea $H$ un espacio de Hilbert (no necesariamente separable) y $T \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Por el teorema espectral, sabemos entonces que $\sigma(T) = \{\lambda_n\}_{n \in F}$ con $F \subset \N$ contable y que $H$ es la suma hilbertiana de los autoespacios $E_n = \ker(T-\lambda_n I)$ de $T$.
 
-Si $f : \sigma(T) \to \R$ una función acotada, definimos \textbf{la evaluación de $f$ en $T$} como
+Por lo tanto si $x \in H$, entonces $x = \sum_{n \geq 1}P_{E_n}(x)$ y más aún se tiene que $Tx = \sum_{n \geq 1}\lambda_n P_{E_n}(x)$ pues cada vector $P_{E_n}(x)$ es un autovector de autovalor $\lambda_n$.
+
+En vista de lo anterior, dada $f : \sigma(T) \to \R$ una función acotada definimos \textbf{la evaluación de $f$ en $T$} como
 \begin{align*}
-\ev_T(f)(x) := \sum_{n \geq 1}f(\lambda_n)\ip{e_n,x}e_n.
+\ev_T(f)(x) := \sum_{n \geq 1}f(\lambda_n)P_{E_n}(x).
 \end{align*}
-Observemos que esta función está bien definida pues $\sum_{n \geq 1}f(\lambda_n)^2\ip{e_n,x}^2 \leq \|f\|^2_\infty \cdot \|x\|^2$, y más aún este argumento dice que resulta continua: como es
-\begin{align*}
-\|f(T)x\|^2 = \left\ip{\sum_{n \geq 1}f(\lambda_n)\ip{e_n,x}e_n \ , \ \sum_{m \geq 1}f(\lambda_m)\ip{e_m,x}e_m\right} = \sum_{n \geq 1}f(\lambda_n)^2\ip{e_n,x}^2 \leq \|f\|^2_\infty\|x\|^2,
-\end{align*}
-se tiene que $\|f(T)\| \leq \|f\|_\infty$. Notar además que esta definición no depende de la base: si $\{v_m\}_{m \geq 1}$ es otra base ortonormal de autovectores, y construimos $\widetilde{f(T)}$ reemplazando cada $e_n$ por $v_n$, entonces
-\begin{align*}
-\widetilde{f(T)}e_n = \sum_{v_m \in E_n}f(\lambda_m)(v_m,e_n)v_m = f(\lambda_n)\sum_{v_m \in E_n}(v_m,e_n)v_m = f(\lambda_n)e_n = f(T)e_n.
-\end{align*}
-Como ambos operadores son acotados y coinciden en una base hilbertiana, deben ser iguales.
+Observemos que esta función está bien definida pues $\sum_{n \geq 1}\|f(\lambda_n)P_{E_n}(x)\|^2 \leq \|f\|_\infty^2 \|x\|^2$, y más aún este argumento dice que $\|ev_T(f)\| \leq \|f\|_\infty$. 
+
+Notar además que esta definición no depende del orden de los autovalores: cualquier reordenamiento dá el mismo operador restringiendo a cada autoespacio, y como $H$ es la suma hilbertiana de los mismos, la \textit{«nueva»} definición debe coincidir con $\ev_T(f)$.
 \end{definition}
 
 \paintline
-A partir de ahora $H$ denotará un espacio de Hilbert separable. Fijamos también un operador $T$ compacto y autoadjunto y una base hilbertiana $\{e_n\}_{n \geq 1}$ de autovectores de $T$ en el sentido anterior.
-
-Es decir, en vista del $\tpaint{Teorema 2.0.1}$ tomamos una base hilbertiana tal que para cada $n \in \N$ es $Te_n = \lambda_ne_n$ con $\lambda_n \in \sigma(T)$, y más aún tal que cada autoespacio tenga por base a una subcolección de $\{e_n\}_{n \geq 1}$.
+A partir de ahora $H$ denotará un espacio de Hilbert. Fijamos también un operador $T$ compacto y autoadjunto y un orden de sus de autovectores $\sigma(T) = \{\lambda_n\}_{n \in F}$ de $T$ en el sentido anterior.
 \paintline
 
 \begin{theorem} La aplicación
@@ -460,24 +553,23 @@ es un morfismo de álgebras de Banach continuo que satisface $\|ev_T\| \leq 1$. 
 \end{theorem}
 \begin{proof} Al definir $\ev_T(f)$ vimos que se satisface $\|\ev_T(f)\| \leq \|f\|_\infty$. Por otro lado, es
 \begin{align*}
-\ev_T(\mathsf{1})x = \sum_{n \geq 1}\mathsf{1}(\lambda_n)\ip{e_n,x}e_n = \sum_{n \geq 1}\ip{e_n,x}e_n = x
+\ev_T(\mathsf{1})x = \sum_{n \geq 1}\mathsf{1}(\lambda_n)P_{E_n}(x) = \sum_{n \geq 1}P_{E_n}(x) = x
 \end{align*}
 y 
 \begin{align*}
-\ev_T(\id)x = \sum_{n \geq 1}\id(\lambda_n)\ip{e_n,x}e_n = \sum_{n \geq 1}\lambda_n\ip{e_n,x}e_n = \sum_{n \geq 1}\ip{e_n,\lambda_nx}e_n = \sum_{n \geq 1}\ip{e_n,Ax}e_n = Tx,
+\ev_T(\id)x = \sum_{n \geq 1}\id(\lambda_n)P_{E_n}(x) = \sum_{n \geq 1}\lambda_nP_{E_n}(x) = \sum_{n \geq 1}TP_{E_n}(x) = T\left[\sum_{n \geq 1}P_{E_n}(x)\right] = Tx,
 \end{align*}
 así que $\ev_T(\mathsf{1}) = I$ y $\ev_T(\id) = T$.
 
 La linealidad es consecuencia de la linealidad de las series: si $f,g : \sigma(T) \to \R$ son acotadas y $\mu \in \R$, entonces
 \begin{align*}
-(f+\mu g)(T)x &= \sum_{n \geq 1}(f+\mu g)(\lambda_n)\ip{e_n,x}e_n = \sum_{n \geq 1}f(\lambda_n)\ip{e_n,x}e_n + \mu\sum_{n \geq 1}g(\lambda_n)\ip{e_n,x}e_n\\
+(f+\mu g)(T)x &= \sum_{n \geq 1}(f+\mu g)(\lambda_n)P_{E_n}(x) = \sum_{n \geq 1}f(\lambda_n)P_{E_n}(x) + \mu\sum_{n \geq 1}g(\lambda_n)P_{E_n}(x)\\
 &= f(T)x + \mu g(T)x = (f(T)+\mu g(T))x.
 \end{align*}
 
 Por último, veamos que $\ev_T$ es un morfismo de álgebras de Banach: si $f,g : \sigma(T) \to \R$, entonces
 \begin{align*}
-f(T)g(T)x &= f(T)\left[\sum_{n \geq 1}g(\lambda_n)(e_n,x)e_n\right] = \sum_{n \geq 1}g(\lambda_n)(e_n,x)[f(T)e_n]\\
-&= \sum_{n \geq 1}f(\lambda_n)g(\lambda_n)(e_n,x)e_n)x = fg(T)x
+f(T)g(T)x &= f(T)\left[\sum_{n \geq 1}g(\lambda_n)P_{E_n}(x)\right] = \sum_{n \geq 1}g(\lambda_n)[f(T)P_{E_n}(x)]= \sum_{n \geq 1}f(\lambda_n)g(\lambda_n)P_{E_n}(x) = fg(T)x
 \end{align*}
 para todo $x \in H$.
 \end{proof}
@@ -492,9 +584,9 @@ para todo $x \in H$.
 \end{proposition}
 \begin{proof} Hacemos cada inciso por separado. 
 \begin{itemize}[listparindent = \parindent]
-\item[(i)] Si $\lambda_j \in \sigma(T)$, es
+\item[(i)] Si $\lambda_j \in \sigma(T)$, existe $u_j \in E_j \setminus \{0\}$ y
 \begin{align*}
-f(T)e_j = \sum_{n \geq 1}f(\lambda_n)(e_n,e_j)e_n = f(\lambda_j)e_j,
+f(T)u_j = f(\lambda_j)p_{E_j}(u_j) = f(\lambda_j)e_j,
 \end{align*}
 así que $f(\sigma(T)) \subset \sigma(f(T))$. 
 
@@ -505,7 +597,7 @@ g(T)(f(T)- \lambda I) = (f(T) - \lambda I)g(T) = I.
 y en consecuencia $\lambda$ no pertenece al espectro de $f(T)$,
 \item[(ii)] Por un cálculo directo, tomando $x,y \in H$ se tiene que 
 \begin{align*}
-\ip{f(T)x, y} = \sum_{n \geq 1} f(\lambda_n) \ip{e_n, x}\ip{e_n,y}  = \ip{f(T)y,x} = \ip{x, f(T)y}.
+\ip{f(T)x, y} = \sum_{n \geq 1} f(\lambda_n)\ip{P_{E_n}(x),P_{E_n}(y)}  = \ip{f(T)y,x} = \ip{x, f(T)y}.
 \end{align*}
 \item[(iii)] Como es $\|ev_T\| \leq 1$, ya sabemos que $\|f(T)\| \leq \|f_{\sigma(T)}\|_\infty$. En vista de $\tpaint{(i)}$ tenemos la otra desigualdad, pues acotando inferiormente por los autovectores de norma $1$ se tiene que 
 \begin{align*}
@@ -513,7 +605,7 @@ y en consecuencia $\lambda$ no pertenece al espectro de $f(T)$,
 \end{align*}
 \item[(iv)] Supongamos ahora que $f \geq 0$ y sea $x \in H$. Por definición de $f(T)$ es 
 \begin{align*}
-(f(T)x,x) = \sum_{n \geq 1} f(\lambda_n) \ip{e_n, x}^2 \geq 0
+(f(T)x,x) = \sum_{n \geq 1} f(\lambda_n)\|P_{E_n}(x)\|^2 \geq 0
 \end{align*}
 pues por hipótesis sabemos que $f(\lambda_n) \geq 0$ para todo $n \geq 1$.
 \end{itemize}
@@ -547,14 +639,14 @@ f(T) = (f(T)-f(0)I) + f(0)I.
 \begin{corollary} Si $f : \R \to \R$ es una función continua que se anula en $0$, el operador $f(T)$ resulta compacto. $\square$
 \end{corollary}
 
-\begin{remark} Aún cuando $f(T)$ no es compacto, la $\tpaint{Proposición }2.0.2$ nos dá información a través de la Alternativa de Fredholm. Por ejemplo, sabemos que el núcleo de la evaluación siempre es de dimensión finita.
+\begin{remark} Aún cuando $f(T)$ no es compacto, la $\tpaint{Proposición 2.0.2}$ nos dá información a través de la Alternativa de Fredholm. Por ejemplo, sabemos que el núcleo de la evaluación siempre es de dimensión finita.
 \end{remark}
 
 \begin{proposition} Si $f,g \in C(\R,\R)$ son dos funciones continuas, entonces $(f \circ g)(T) = f(g(T))$.
 \end{proposition}
-\begin{proof} En efecto, la base ortonormal $\{e_n\}_{n \geq 1}$ de autovectores resulta una base ortonormal de autovectores de $g(T)$ con $g(T)e_n = g(\lambda_n)e_n$. Por lo tanto, para cada $x \in H$ es
+\begin{proof} Como $\sigma(g(T)) = g(\sigma(T))$, es
 \begin{align*}
-f(g(T))x = \sum_{n \geq 1}f(g(\lambda_n))(e_n,x)e_n = \sum_{n \geq 1}(f \circ g)(\lambda_n)(e_n,x)e_n = (f \circ g)(T).
+f(g(T))x = \sum_{n \geq 1}f(g(\lambda_n))P_{E_n}(x) = \sum_{n \geq 1}(f \circ g)(\lambda_n)P_{E_n}(x) = (f \circ g)(T). 
 \end{align*}
 \end{proof}
 
@@ -571,12 +663,12 @@ Notaremos $A^{1/n} := S$ en ambos casos a este operador, que de existir resulta 
 \end{theorem}
 \begin{proof} Para cada $n \geq 1$, definimos (cuando sea posible) $f :t \in \sigma(T) \mapsto t^{1/n} \in \R$.
 \begin{itemize}[listparindent = \parindent] 
-\item[(i)] Sea $S = f_n(A)$. Por definición, es $S^n = f_n(T) \circ \cdots \circ f_n(T) = f_n^n(T) = id(T) = T$. Además, si $S'$ es tal que $S'^n = T$, entonces
+\item[(i)] Sea $S = f_n(A)$. Por definición, es $S^n = f_n(T) \circ \cdots \circ f_n(T) = f_n^n(T) = id(T) = T$. Además, si $\widetilde{S}$ es tal que $\widetilde{S}^n = T$, entonces
 \begin{align*}
-S' = id(S') = (f_n^n \circ (t \mapsto t^n))(S') = f_n^n(S'^n) = f_n^n(T) = S.
+\widetilde{S} = id(\widetilde{S}) = (f_n^n \circ (t \mapsto t^n))(\widetilde{S}) = f_n^n(\widetilde{S}^n) = f_n^n(T) = S.
 \end{align*}
 \item[(ii)] Recordemos que como $T$ es autoadjunta, es $\inf \sigma(T) = \inf_{\|x\| = 1} (Tx,x)$ y por lo tanto tenemos que $T \geq 0$ si y sólo si $\sigma(T) \subset [0,+\infty)$. 
-Esto nos permite hacer la misma construcción que antes para este caso, y como ahora es $f_n \geq 0$, de aquí se concluye que $T^{1/n} \geq 0$. Para la unicidad resta notar que si $S' \geq 0$ es otra raíz $n$-ésima, entonces $S' = |S'| = \sqrt{1/n}{S'^n} = T^{1/n}$.
+Esto nos permite hacer la misma construcción que antes para este caso, y como ahora es $f_n \geq 0$, de aquí se concluye que $T^{1/n} \geq 0$. Para la unicidad resta notar que si $\widetilde{S} \geq 0$ es otra raíz $n$-ésima, entonces $\widetilde{S} = |\widetilde{S}| = (\widetilde{S}^n)^{1/n} = T^{1/n}$.
 \end{itemize}
 
 Finalmente, como para todo $n \geq 1$ es $f_n(0) = 0$, sabemos que $T^{1/n}$ siempre resulta compacto.
@@ -617,7 +709,7 @@ para toda $f : \sigma(T) \to \R$ continua. Llamamos a $\mu_h$ la \textbf{medida 
 \end{definition}
 
 \begin{proposition}
-Sea $H$ un espacio de Hilbert separable y $T \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Si $(g_n)_{n \geq 1} \subset \mathcal{C}(\sigma(T),\R)$ es una sucesión uniformemente acotada que converge puntualmente a cierta función $g : \sigma(T) \to \R$, la sucesión de operadores $\{g_n(T)\}_{n \geq 1} \subset \mathscr{L}(H)$ \textbf{sot}-converge a $g(T)$.
+Sea $H$ un espacio de Hilbert y $T \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Si $(g_n)_{n \geq 1} \subset \mathcal{C}(\sigma(T),\R)$ es una sucesión uniformemente acotada que converge puntualmente a cierta función $g : \sigma(T) \to \R$, la sucesión de operadores $\{g_n(T)\}_{n \geq 1} \subset \mathscr{L}(H)$ \textbf{sot}-converge a $g(T)$.
 \end{proposition}
 \begin{proof} Observemos que por el teorema de convergencia dominada, para cada $h \in H$ es
 \begin{align*}
@@ -636,7 +728,7 @@ Por hipótesis sabemos que las funciones $(g_n^2)_{n \geq 1}$ también están un
 y tomando raíces vemos que $\|g_n(T)x\| \to \|g(T)x\|$.
 \end{proof}
 
-\begin{theorem}[un caso particular del teorema ergódico medio de Von Neumann] Sea $H$ un espacio de Hilbert separable. Si $T \in \mathscr{K}(H)$ un operador compacto y autoadjunto tal que $\|T\| \leq 1$, entonces los promedios de $T$ \textbf{sot}-convergen al proyector $\pi_T$ del subsepacio de puntos fijos de $T$. Es decir, si notamos $E_1 = \{x \in H : Tx = x\}$ y $\pi_T := P_{E_1}$, entonces
+\begin{theorem}[un caso particular del teorema ergódico medio de Von Neumann] Sea $H$ un espacio de Hilbert. Si $T \in \mathscr{K}(H)$ un operador compacto y autoadjunto tal que $\|T\| \leq 1$, entonces los promedios de $T$ \textbf{sot}-convergen al proyector $\pi_T$ del subsepacio de puntos fijos de $T$. Es decir, si notamos $E_1 = \{x \in H : Tx = x\}$ y $\pi_T := P_{E_1}$, entonces
 \begin{align*}
 \frac{1}{n}\sum_{i=1}^{n}T^ix \ \xrightarrow{n \to \infty} \ \pi_Tx.
 \end{align*}
