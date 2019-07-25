@@ -767,8 +767,13 @@ resulta un funcional lineal positivo. El teorema de Riesz-Markov-Kakutani nos as
 \begin{align*}
 \ip{f(T)h,h} = \int_{\sigma(T)} f d\mu_h
 \end{align*}
-para toda $f : \sigma(T) \to \R$ continua. Llamamos a $\mu_h$ la \textbf{medida espectral de $T$ asociada a $h$}.
+para toda $f : \sigma(T) \to \R$ continua. Llamamos a $\mu_h$ la \textbf{medida espectral de $T$ asociada a $h$}. 
+
+Esto permite definir $g(T)$ para $g : \sigma(A) \to \R$ una función Borel medible: definimos $Q(x) = \int_{\sigma(T)}gd\mu_x$, y a partir de esto una forma bilineal que luego (fijando $x$ en una coordenada y usando el teorema de representación de Riesz) definirá $g(T)x$ para cada $x$. 
+
+Además, en vista de la proposición que sigue veremos que cuando $g$ es acotada $g(A)$ coincide con la anterior definición, ya que ambas construcciones dan el mismo operador en cada autoespacio de $T$.
 \end{definition}
+\newpage
 
 \begin{proposition}
 Sea $H$ un espacio de Hilbert y $T \in \mathscr{K}(H)$ un operador compacto y autoadjunto. Si $(g_n)_{n \geq 1} \subset \mathcal{C}(\sigma(T),\R)$ es una sucesión uniformemente acotada que converge puntualmente a cierta función $g : \sigma(T) \to \R$, la sucesión de operadores $\{g_n(T)\}_{n \geq 1} \subset \mathscr{L}(H)$ \textbf{sot}-converge a $g(T)$.
