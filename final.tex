@@ -205,14 +205,42 @@ u \in K\\
 \end{cases}
 \end{align*}
 \end{theorem}
-\begin{proof}
-content...
+\begin{proof} Por el lema de Riesz existe un único $f \in H$ tal que $\varphi \equiv \ip{f,-}$ y, para cada $u \in H$, existe un único $Au \in H$ tal que $\mathfrak{a}(u,-) \equiv \ip{Au,-}$. 
+
+Por unicidad, la aplicación $A : H \to H$ resulta lineal. Más aún es continua pues
+\begin{align*}
+\|Au\|^2 = \ip{Au,Au} = \mathfrak{a}(u,Au) \leq C \|u\| \cdot \|Au\|, y
+\end{align*}
+como $\mathfrak{a}$ es cohesiva tenemos que $\ip{Au,u} \geq \theta \|u\|^2$.
+
+Reescribiendo, lo que debemos ver es que existe un único $u \in K$ tal que
+\begin{align*}
+(Au, v-u) \geq (f,v-u)
+\end{align*}
+para todo $v \in K$, o equivalentemente que para cierto $\rho > 0$ es
+\begin{align*}
+\ip{\rho(f-Au) + u -u, v-u} \leq 0 \quad (\forall v \in K).
+\end{align*}
+
+Alcanza entonces ver que para algún $\rho > 0$ $S(u) := P_K(\rho(f-Au)+u)$ es estrictamente contractiva. En efecto, como es
+\begin{align*}
+\|Su-Sv\|^2 &\leq \|(u-v) - \rho A(u-v)\| = \|u-v\|^2 -2\rho(u-v,A(u-v)) + \rho^2\|A(u-v)\|^2\\
+&\leq \|u-v\|^2 - 2\rho \theta \|u-v\|^2 + \rho^2C^2\|u-v\|^2\\
+&= (C^2\rho^2-2\theta\rho+1)\|u-v\|^2,
+\end{align*}
+basta tomar $\rho > 0$ tal que 
+\[
+C^2\rho^2-2\theta\rho+1 < 1 \iff C^2\rho^2-2\theta\rho < 0 \iff \rho < \frac{2\theta}{C^2}.
+\]
 \end{proof}
 
-\begin{theorem}[Lax-Milgram]
+\begin{theorem}[Lax-Milgram] Sea $H$ y $\mathfrak{a} : H \times H \to \R$ una función bilineal continua, cohesiva y simétrica. Si $\varphi \in H^*$ es un funcional lineal, entonces existe un único $u \in H$ tal que $\mathfrak{a}(u,-) \equiv \varphi$.
 \end{theorem}
-\begin{proof}
-content...
+\begin{proof} Por el teorema de Stampacchia, sabemos que existe $u \in H^*$ tal que
+\[
+\mathfrak{a}(u,v) - \langle \varphi, v \rangle \geq 0
+\]
+para todo $v \in H$. Como $\mathfrak{a}(u,-) - \varphi$ en un funcional lineal acotado en $H$, debe ser cero, y por lo tanto tenemos que $\mathfrak{a}(u,-) = \varphi$.
 \end{proof}
 
 \begin{definition} Sea $H$ un espacio de Hilbert y $(E_n)_{n \geq 1}$ una sucesión de subespacios cerrados de $H$. Se dice que $H$ es \textbf{suma hilbertiana} de $(E_n)_{n \geq 1}$ si 
@@ -343,8 +371,27 @@ lo que prueba que $\|T_\eps -T\| \leq 2\eps$.
 \item[(d)] $\dim N(I-T^*) = \dim N(I-T)$.
 \end{itemize} 
 \end{theorem}
-\begin{proof}
-content...
+\begin{proof} Probaremos $\tpaint{(a)$ y $(b)}$, que es lo necesario para demostrar el teorema espectral (de aquí se deduce $\tpaint{(c)}$ si $T$ es autoadjunto). La demostración completa se encuentra, por ejemplo, en $\cite{Brezis}$.
+\begin{itemize}[listparindent = \parindent]
+\item[(a)] Veamos equivalentemente que $B_{E_1}(0)$ es compacto. Si $x \in N(I-T)$, sabemos que $x = Tx \in T(B_E(0))$ y entonces $B_{E_1} \subset T(B_E(0))$ es un cerrado contenido en un compacto, esto es, un compacto.
+\item[(b)] Ya sabemos que $\overline{R(I-T)} = {}^\perp N(I-T^*)$, basta ver que $I-T$ tiene rango cerrado. Tomemos una sucesión $(f_n)_{n \geq 1} \subset R(I-T)$, con $f_n = u_n - Tu_n$ y $u_n \in E$ para cada $n \in \N$, que converge a cierto $f \in E$.
+
+Notemos $d_n = d(u_n, N(I-T))$ para cada $n \in \N$. Como $N(I-T)$ es de dimensión finita, existe $v_n \in N(I-T)$ tal que $d_n = \|u_n-v_n\|$. Rescribiendo, es
+\begin{align*}
+f_n &= u_n - Tu_n = (u_n - v_n) + v_n - Tu_n = (u_n - v_n) + Tv_n - Tu_n\\
+&= (u_n-v_n) -T(u_n-v_n).
+\end{align*}
+
+Veamos ahora que $\{u_n-v_n\}_{n \geq 1}$ es acotada: de lo contrario, tendríamos una sucesión tal que $\|u_{n_k}-v_{n_k}\| \to \infty$. Notando $w_k := \frac{u_{n_k}-v_{n_k}}{\|u_{n_k}-v_{n_k}\|}$ tenemos que $w_k - Tw_k = d_{n_k}^{-1}f_{n_k}$ y $\|w_k\| = 1$ para todo $k \in \N$. 
+
+Como $f_n \to f$ y $d_{n_k} \to \infty$, debe ser $d_{n_k}^{-1}f_{n_k} \to 0$ y al $T$ ser compacto, podemos además tomar la subsucesión de forma que $Tw_k \to z$ para cierto $z \in N(I-T)$, por lo que necesariamente es $w_k \to z$. Sin embargo esto es absurdo, pues para todo $k \in \N$ es $d(w_k,N(I-T)) = 1$, y vemos así que $\{u_n-v_n\}_{n \geq 1}$ es acotada.
+
+Una vez más, por la compacidad $T$ existe una sucesión convergente $T(u_{n_k}-v_{n_k}) \to \ell$ y entonces es $u_{n_k}-v_{n_k} \to f+\ell$. Notando $g = f+l$, finalmente es
+\[
+f = g -Tg \in R(I-T)
+\]
+y por lo tanto $I-T$ tiene rango cerrado.
+\end{itemize}
 \end{proof}
 
 \subsection{Teoría Espectral}
@@ -586,7 +633,7 @@ para todo $x \in H$.
 \begin{itemize}[listparindent = \parindent]
 \item[(i)] Si $\lambda_j \in \sigma(T)$, existe $u_j \in E_j \setminus \{0\}$ y
 \begin{align*}
-f(T)u_j = f(\lambda_j)p_{E_j}(u_j) = f(\lambda_j)e_j,
+f(T)u_j = f(\lambda_j)p_{E_j}(u_j) = f(\lambda_j)u_j,
 \end{align*}
 así que $f(\sigma(T)) \subset \sigma(f(T))$. 
 
@@ -594,7 +641,7 @@ Recíprocamente, tomemos $\lambda \not \in f(\sigma(T))$. Como esto dice que fun
 \begin{align*}
 g(T)(f(T)- \lambda I) = (f(T) - \lambda I)g(T) = I.
 \end{align*}
-y en consecuencia $\lambda$ no pertenece al espectro de $f(T)$,
+y en consecuencia $\lambda$ no pertenece al espectro de $f(T)$.
 \item[(ii)] Por un cálculo directo, tomando $x,y \in H$ se tiene que 
 \begin{align*}
 \ip{f(T)x, y} = \sum_{n \geq 1} f(\lambda_n)\ip{P_{E_n}(x),P_{E_n}(y)}  = \ip{f(T)y,x} = \ip{x, f(T)y}.
@@ -605,16 +652,24 @@ y en consecuencia $\lambda$ no pertenece al espectro de $f(T)$,
 \end{align*}
 \item[(iv)] Supongamos ahora que $f \geq 0$ y sea $x \in H$. Por definición de $f(T)$ es 
 \begin{align*}
-(f(T)x,x) = \sum_{n \geq 1} f(\lambda_n)\|P_{E_n}(x)\|^2 \geq 0
+(f(T)x,x) = \sum_{n \geq 1} f(\lambda_n)\|P_{E_n}(x)\|^2 \geq 0,
 \end{align*}
 pues por hipótesis sabemos que $f(\lambda_n) \geq 0$ para todo $n \geq 1$.
 \end{itemize}
 \end{proof}
 
-\begin{remark} Lo anteriores resultados también valen cuando $f$ está definida en un dominio que contiene al espectro (mientras esté acotada allí) precomoponiendo $\ev_T$ con la restricción de $f$ al $\sigma(T)$. Más aún, el operador $f(T)$ sólo depende de los valores que $f$ toma en su espectro. En particular, esto nos dice que podemos definir $f(T)$ para $f : \R \to \R$ continua o medible Borel. 
-
-Más aún, la aplicación $ev_T : \mathcal{C}(\R) \to \mathscr{L}(H)$ es el único morfismo de álgebras de Banach continuo que tiene a $I$ por imagen de $\mathsf{1}$ y $T$ por imagen de $\id$.
+\begin{remark} Dado que el espectro es compacto, esto nos permite definir $f(T)$ para cualquier $f : X \subset \R \to \R$ continua (pero no necesariamente acotada) en $X \supset \sigma(T)$. Concretamente,  podemos precomponer a $\ev_T$ con la restricción $(-)|_{\sigma(T)} : C(X, \R) \to B(\sigma(T), \R)$. La siguiente proposición indica que en algún sentido esta aplicación (que notamos $\ev_T$ de igual manera) resulta \textit{«canónica»}.
 \end{remark}
+
+\begin{proposition} La aplicación $ev_T : \mathcal{C}(\sigma(T),\R) \to \mathscr{L}(H)$ es el único morfismo de álgebras de Banach continuo que tiene a $I$ por imagen de $\mathsf{1}$ y $T$ por imagen de $\id$.
+\end{proposition}
+\begin{proof} Sea $e : \mathcal{C}(\sigma(T),\R) \to \mathscr{L}(H)$ un morfismo de álgebras de Banach continuo que satisface $e(\mathsf{1}) = I$ y $e(\id) = T$. Si $p (x)= a_nx^n + \dots + a_1x+ a_0$ es la evaluación de un polinomio en $\sigma(T)$, debe ser
+\begin{align*}
+e(p) = \sum_{i=1}^na_ne(id)^n + a_0e(\mathsf{1}) = \sum_{i=1}^na_n\ev_T(id)^n + a_0\ev_T(\mathsf{1}) = \ev_T(p).
+\end{align*}
+
+Como el espectro es compacto, los polinomios son densos en $C(\sigma(T),\R)$. Al ser tanto $\ev_T$ como $e$ funciones que coinciden en un denso de su dominio, vemos que $e = \ev_T$.
+\end{proof}
 
 \begin{proposition} Si $f : \R \to \R$ es una función continua, entonces existe un operador compacto $S \in \mathscr{K}(H)$ tal que
 \begin{align*}
@@ -636,18 +691,27 @@ f(T) = (f(T)-f(0)I) + f(0)I.
 \end{align*}  
 \end{proof}
 
-\begin{corollary} Si $f : \R \to \R$ es una función continua que se anula en $0$, el operador $f(T)$ resulta compacto. $\square$
+\begin{corollary} Si $f : \R \to \R$ es una función continua que se anula en $0$, el operador $f(T)$ resulta compacto.\qed
 \end{corollary}
 
-\begin{remark} Aún cuando $f(T)$ no es compacto, la $\tpaint{Proposición 2.0.2}$ nos dá información a través de la Alternativa de Fredholm. Por ejemplo, sabemos que el núcleo de la evaluación siempre es de dimensión finita.
+\begin{remark} Aún cuando $f(T)$ no es compacto, la $\tpaint{Proposición 2.0.2}$ nos dá información a través de la Alternativa de Fredholm. Por ejemplo, sabemos que en ese caso el núcleo de la evaluación es de dimensión finita.
 \end{remark}
 
-\begin{proposition} Si $f,g \in C(\R,\R)$ son dos funciones continuas, entonces $(f \circ g)(T) = f(g(T))$.
+\begin{proposition} Para todo par $g : \sigma(T) \to \R$, $f : g(\sigma(T)) \to \R$ de funciones continuas se tiene que \[(f \circ g)(T) = f(g(T)).\]
 \end{proposition}
-\begin{proof} Como $\sigma(g(T)) = g(\sigma(T))$, es
+\begin{proof} Fijemos una tal función $g$. Observemos en primer lugar que como es $\sigma(g(T)) = g(\sigma(T))$, la aplicación
 \begin{align*}
-f(g(T))x = \sum_{n \geq 1}f(g(\lambda_n))P_{E_n}(x) = \sum_{n \geq 1}(f \circ g)(\lambda_n)P_{E_n}(x) = (f \circ g)(T). 
+g^* : C(\sigma(g(T)), \ &\R) \to C(\sigma(T),\R)\\
+&h \longmapsto h \circ g
 \end{align*}
+está bien definida. Más aún, se tiene que $g^*$ es un morfismo de álgebras de Banach con $\|g^*\| \leq 1$ que satisface $g^*(\mathsf{1}) = \mathsf{1}$ y $g^*(\id) = \id$.
+
+Consecuentemente, el morfismo $e := \ev_T \circ \ g^*$ de álgebras de Banach resulta continuo y satisface tanto $e(\mathsf{1}) = I$ como $e(\id) = g(T)$, por lo que necesariamente es $e \equiv ev_{g(T)}$. 
+
+Finalente, evaluando en $f$ obtenemos que
+\[
+(f \circ g)(T) = e(f) = \ev_{g(T)}(f) = f(g(T)).
+\]
 \end{proof}
 
 \subsection{Aplicaciones}
@@ -674,9 +738,7 @@ Esto nos permite hacer la misma construcción que antes para este caso, y como a
 Finalmente, como para todo $n \geq 1$ es $f_n(0) = 0$, sabemos que $T^{1/n}$ siempre resulta compacto.
 \end{proof}
 
-\paintline
-
-La siguiente aplicación es una adaptación del $\tpaint{Teorema 12.44}$ de $\cite{Rudin}$, que es una versión del teorema ergódico medio de Von Neumann para transformaciones unitarias,
+La siguiente aplicación es una adaptación del $\tpaint{Teorema 12.44}$ de $\cite{Rudin}$, que a su vez es una versión del teorema ergódico medio de Von Neumann para transformaciones unitarias:
 
 \begin{tcolorbox}
 \begin{theorem*} Si $H$ es un espacio de Hilbert y $U \in \mathscr{L}(H)$ una transformación unitaria, entonces para cada $x \in H$ los \textit{promedios} $\frac{1}{n}(x + Ux + \dots + U^{n-1}x)$ convergen puntualmente a un elemento $y \in H$.
@@ -686,7 +748,7 @@ La demostración presente en $\cite{Rudin}$ hace uso del teorema espectral en un
 
 Siguiendo la idea de esta demostración pero en el caso de operadores compactos y autoadjuntos, definimos a continuación el concepto de medida espectral y con esto probamos un resultado auxiliar de convergencia. 
 
-Concluimos con el $\tpaint{Teorema 2.0.4}$, el cual afirma que si $T$ es un operador compacto, autoadjunto y de norma $1$, entonces sus promedios convergen puntualmente a la proyección ortogonal del subespacio de sus puntos fijos.
+Concluimos con el $\tpaint{Teorema 2.0.4}$, el cual afirma que si $T$ es un operador compacto, autoadjunto y contractivo, entonces sus \textit{promedios} convergen puntualmente a la proyección ortogonal del subespacio de sus puntos fijos.
 \\
 \begin{tcolorbox}
 \begin{theorem*}[\textbf{Riesz-Markov-Kakutani}] Sea $X$ un espacio topológico Hausdorff y localmente compacto. Si $\psi : C(X) \to \R$ es un funcional lineal positivo, existe una única medida Borel regular $\mu$ en $X$ tal que
@@ -719,13 +781,13 @@ Usando la identidad de polarización, vemos que $(g_n(T)x,y) \to (g(T)x,y)$ para
 \begin{align*}
 g_n(T)x \rightharpoonup g(T)x
 \end{align*}
-para cada $x \in H$. Para terminar alcanza ver que siempre es $\|g_n(T)x\| \to \|g(T)x\|$.
+para cada $x \in H$. Para terminar alcanza ver que siempre es $\|g_n(T)x\| \to \|g(T)x\|$. Equivalentemente, veremos que $\|g_n(T)x\|^2 \to \|g(T)x\|^2$ para todo $x \in H$.
 
-Por hipótesis sabemos que las funciones $(g_n^2)_{n \geq 1}$ también están uniformemente acotadas y $g_n^2 \to g^2$ puntualmente. Por lo tanto, el argumento anterior nos dice que para cada $x \in H$ es
+Por hipótesis sabemos que las funciones $(g_n^2)_{n \geq 1}$ también están uniformemente acotadas y convergen puntualmente a $g^2$, así que el argumento anterior nos dice que efectivamente
 \begin{align*}
-\|g_n(T)x\|^2 = \ip{g_n(T)x,g_n(T)x} = \ip{g_n(T)g_n(T)x,x} = \ip{g_n^2(T)x,x} \to \ip{g^2(T)x,x} = \|g(T)x\|^2. 
+\|g_n(T)x\|^2 = \ip{g_n(T)x,g_n(T)x} = \ip{g_n(T)g_n(T)x,x} = \ip{g_n^2(T)x,x} \to \ip{g^2(T)x,x} = \|g(T)x\|^2
 \end{align*}
-y tomando raíces vemos que $\|g_n(T)x\| \to \|g(T)x\|$.
+para cada $x \in H$.
 \end{proof}
 
 \begin{theorem}[un caso particular del teorema ergódico medio de Von Neumann] Sea $H$ un espacio de Hilbert. Si $T \in \mathscr{K}(H)$ un operador compacto y autoadjunto tal que $\|T\| \leq 1$, entonces los promedios de $T$ \textbf{sot}-convergen al proyector $\pi_T$ del subsepacio de puntos fijos de $T$. Es decir, si notamos $E_1 = \{x \in H : Tx = x\}$ y $\pi_T := P_{E_1}$, entonces
