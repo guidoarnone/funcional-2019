@@ -451,7 +451,7 @@ tiene solución única. Esto se satisface en particular cuando la aplicación $\
 \begin{align*}
 \sigma(T) \cap \left\{\lambda \in \R : |\lambda| \geq \frac{1}{n}\right\}
 \end{align*}
-es finito. En particular este es discreto, así que debe ser contable. De ser infinito, esto dice además que $\sigma(T)$ tiene a $0$ como punto de acumulación y podemos entonces reordenar sus elementos de forma que resulten una sucesión $\{\lambda\}_{n \in \N}$ tal que $\lambda_n \to 0$.
+es finito, pues esto diría que $\sigma(T)$ debe ser contable y der ser infinito tiene a $0$ como punto de acumulación.
 
 Si no fuera así, existiría por compacidad una sucesión $\{\lambda_n\}_{n \geq 1} \subset \sigma(T)$ tal que $\lambda_n \to \lambda \neq 0$. Veamos que esto esto es absurdo. En particular tendríamos para cada $n \in \N$ un vector unitario $e_n \in \ker (T-\lambda I)$. 
 
@@ -697,7 +697,7 @@ f(T) = (f(T)-f(0)I) + f(0)I.
 \begin{remark} Aún cuando $f(T)$ no es compacto, la $\tpaint{Proposición 2.0.2}$ nos dá información a través de la Alternativa de Fredholm. Por ejemplo, sabemos que en ese caso el núcleo de la evaluación es de dimensión finita.
 \end{remark}
 
-\begin{proposition} Para todo par $g : \sigma(T) \to \R$, $f : g(\sigma(T)) \to \R$ de funciones continuas se tiene que \[(f \circ g)(T) = f(g(T)).\]
+\begin{proposition} Para todo par $g : \sigma(T) \to \R$, $f : g(\sigma(T)) \to \R$ de funciones continuas con $g(0) = 0$ se tiene que \[(f \circ g)(T) = f(g(T)).\]
 \end{proposition}
 \begin{proof} Fijemos una tal función $g$. Observemos en primer lugar que como es $\sigma(g(T)) = g(\sigma(T))$, la aplicación
 \begin{align*}
